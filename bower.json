@@ -12,6 +12,7 @@
     "json2":"latest",
     "jquery": "~2.1.0",
     "jquery-cookie": "latest",
+    "spinjs": "latest",
     "requirejs": "~2.1.10",
     "requirejs-text": "latest",
     "bootstrap": "latest"
