@@ -3,144 +3,96 @@ module.exports = function(grunt) {
 
 	grunt.initConfig({
 		pkg: grunt.file.readJSON('package.json'),
-		banner: '/*!\n' +
-            ' * Main Dashboard v<%= pkg.version %> (<%= pkg.homepage %>)\n' +
-            ' * Copyright 2013-<%= grunt.template.today("yyyy") %> <%= pkg.author %>\n' +
-            ' */\n',
 
 		// Task configuration.
 		clean: {
 			dist: ['dist']
 		},
+		requirejs: {
+			release: {
+				options: {
+					mainConfigFile: "app/config.js",
+					generateSourceMaps: true,
+					include: ["main"],
+					out: "dist/<%= pkg.name %>.min.js",
+					optimize: "uglify2",
+
+					// Since we bootstrap with nested `require` calls this option allows
+					// R.js to find them.
+					findNestedDependencies: true,
+
+					// Include a minimal AMD implementation shim.
+					name: "almond",
+
+					// Setting the base url to the distribution directory allows the
+					// Uglify minification process to correctly map paths for Source
+					// Maps.
+					baseUrl: "dist/app",
+
+					// Wrap everything in an IIFE.
+					wrap: true,
+
+					// Do not preserve any license comments when working with source
+					// maps.  These options are incompatible.
+					preserveLicenseComments: false
+				}
+			}
+		},
+//		copy: {
+//			release: {
+//				files: [
+//					{ src: "app/**", dest: "dist/" },
+//					{ src: "vendor/**", dest: "dist/" },
+//					{ src: "assets/css/*.css", dest: "dist/" }
+//				]
+//			}
+//		},
 		copy: {
 			fonts: {
 				expand: true,
-				src: 'fonts/*',
-				dest: 'dist/'
+				src: '**',
+				cwd: 'assets/fonts',
+				dest: 'dist/fonts/'
 			},
 			css: {
 				expand: true,
-				src: 'css/**/*.css',
-				dest: 'dist/css'
+				src: '**',
+				cwd: 'assets/css',
+				dest: 'dist/css/'
 			},
-			js: {
+			vendor: {
 				expand: true,
-				src: 'js/**/*.js',
-				dest: 'dist/js'
-			}
-		},
-		concat: {
-			options: {
-				separator: ';'
+				src: 'vendor/**/*.js',
+				dest: 'dist/'
 			},
-			dist: {
-				src: ['js/**/*.js'],
-				dest: 'dist/js/<%= pkg.name %>.js'
+			app: {
+				expand: true,
+				src: 'app/**/*.js',
+				dest: 'dist/'
 			}
 		},
-		uglify: {
-			options: {
-				banner: '/*! <%= pkg.name %> <%= grunt.template.today("dd-mm-yyyy") %> */\n'
-			},
-			dist: {
-				files: {
-					'dist/js/<%= pkg.name %>.min.js': ['<%= concat.dist.dest %>']
-				}
-			}
-		},
-		jshint: {
-			files: ['Gruntfile.js', 'js/main.js'],
-			options: {
-				// options here to override JSHint defaults
-				globals: {
-					jQuery: true,
-					console: true,
-					module: true,
-					document: true
-				}
+		compress: {
+			release: {
+				options: {
+					archive: "dist/<%= pkg.name %>.min.js.gz"
+				},
+
+				files: ["dist/<%= pkg.name %>.min.js"]
 			}
 		},
 		jsdoc : {
 			dist : {
-				src: ['js/*.js'],
+				src: ['app/*.js'],
 				options: {
 					destination: 'doc'
 				}
 			}
 		},
-		less: {
-			compileCore: {
-				options: {
-//					strictMath: true,
-//					sourceMap: true,
-					outputSourceFiles: true,
-					sourceMapURL: '<%= pkg.name %>.css.map',
-					sourceMapFilename: 'dist/css/<%= pkg.name %>.css.map'
-				},
-				files: {
-					'css/<%= pkg.name %>.css': 'less/main.less'
-				}
-			}
-		},
-		autoprefixer: {
-			options: {
-				browsers: [
-					'Android 2.3',
-					'Android >= 4',
-					'Chrome >= 20',
-					'Firefox >= 24', // Firefox 24 is the latest ESR
-					'Explorer >= 8',
-					'iOS >= 6',
-					'Opera >= 12',
-					'Safari >= 6'
-				]
-			},
-			core: {
-				options: {
-					map: true
-				},
-				src: 'css/<%= pkg.name %>.css'
-			}
-		},
-		csslint: {
-			options: {
-				csslintrc: 'less/.csslintrc'
-			},
-			src: [
-				'dist/css/main.css'
-			]
-		},
 		cssmin: {
-			combine: {
+			release: {
 				files: {
-					'dist/css/<%= pkg.name %>.css': ['css/**/*.css']
+					"dist/css/<%= pkg.name %>.min.css": ["dist/css/<%= pkg.name %>.css"]
 				}
-			},
-			minify: {
-				expand: true,
-				cwd: 'dist/css/',
-				src: ['*.css', '!*.min.css'],
-				dest: 'dist/css/',
-				ext: '.min.css'
-			}
-		},
-		usebanner: {
-			options: {
-				position: 'top',
-				banner: '<%= banner %>'
-			},
-			files: {
-				src: 'dist/css/*.css'
-			}
-		},
-		watch: {
-			src: {
-				files: '<%= jshint.src.src %>',
-				tasks: ['jshint:src']
-			},
-			less: {
-				files: 'less/*.less',
-				tasks: 'less'
 			}
 		}
 	});
@@ -149,14 +101,17 @@ module.exports = function(grunt) {
 	require('load-grunt-tasks')(grunt, { scope: 'devDependencies' });
 	require('time-grunt')(grunt);
 
+	grunt.registerTask('backup', ['copy:fonts', 'copy:css', 'copy:vendor', 'copy:app']);
+
 	// JS distribution task.
 	grunt.registerTask('dist-js', ['concat', 'uglify']);
 
 	// CSS distribution task.
 	grunt.registerTask('less-compile', ['less:compileCore']);
-	grunt.registerTask('dist-css', ['less-compile', 'autoprefixer', 'usebanner', 'cssmin']);
+	grunt.registerTask('dist-css', ['cssmin:release']);
 
 	// Default task.
-	grunt.registerTask('default', ['clean', 'copy:fonts', 'dist-css', 'dist-js']);
+//	grunt.registerTask('default', ['clean', 'copy:release', 'dist-css', 'dist-js']);
+	grunt.registerTask('default', ['clean', 'backup', 'dist-css']);
 
 };
