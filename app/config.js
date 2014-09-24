@@ -2,6 +2,7 @@ require.config({
     urlArgs: 'v=' + (new Date()).getTime(),
     paths: {
         "vendor": 				"../vendor",
+        "almond":               "../vendor/almond/almond",
         "underscore": 			"../vendor/lodash/dist/lodash.underscore",
         "jquery": 				"../vendor/jquery/dist/jquery",
         "backbone": 			"../vendor/backbone/backbone",

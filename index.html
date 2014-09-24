@@ -1,21 +1,26 @@
 <!doctype html>
 <html lang="en">
-    <head>
-        <meta charset="utf-8">
-        <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
-        <meta name="viewport" content="width=device-width,initial-scale=1">
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <meta name="viewport" content="width=device-width,initial-scale=1">
 
-        <title>Admin panel</title>
+    <title>Admin panel</title>
 
-        <link href='http://fonts.googleapis.com/css?family=Ubuntu:300,400,700,300italic|Open+Sans:400,300,700&subset=latin,cyrillic' rel='stylesheet' type='text/css'>
-        <link rel="stylesheet" href="assets/css/dashboard.css">
-    </head>
+    <link href='http://fonts.googleapis.com/css?family=Ubuntu:300,400,700,300italic|Open+Sans:400,300,700&subset=latin,cyrillic' rel='stylesheet' type='text/css'>
 
-    <body>
+    <!-- build:[href] assets/css/dashboard.min.css -->
+    <link rel="stylesheet" href="assets/css/dashboard.css">
+    <!-- /build -->
+</head>
 
-        <main role="application" id="main"></main>
+<body>
 
-        <script data-main="app/main" src="vendor/requirejs/require.js"></script>
+    <main role="application" id="main"></main>
 
-    </body>
+    <!-- build:[src] dashboard.min.js -->
+    <script data-main="app/main" src="vendor/requirejs/require.js"></script>
+    <!-- /build -->
+
+</body>
 </html>

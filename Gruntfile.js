@@ -8,6 +8,23 @@ module.exports = function(grunt) {
 		clean: {
 			dist: ['dist']
 		},
+        copy: {
+            assets: {
+                expand: true,
+                src: ['assets/**', '!assets/less/**'],
+                dest: 'dist/'
+            },
+            vendor: {
+                expand: true,
+                src: 'vendor/**/*.js',
+                dest: 'dist/'
+            },
+            app: {
+                expand: true,
+                src: 'app/**/*.js',
+                dest: 'dist/'
+            }
+        },
 		requirejs: {
 			release: {
 				options: {
@@ -38,51 +55,19 @@ module.exports = function(grunt) {
 				}
 			}
 		},
-//		copy: {
-//			release: {
-//				files: [
-//					{ src: "app/**", dest: "dist/" },
-//					{ src: "vendor/**", dest: "dist/" },
-//					{ src: "assets/css/*.css", dest: "dist/" }
-//				]
-//			}
-//		},
-		copy: {
-			fonts: {
-				expand: true,
-				src: '**',
-				cwd: 'assets/fonts',
-				dest: 'dist/fonts/'
-			},
-			css: {
-				expand: true,
-				src: '**',
-				cwd: 'assets/css',
-				dest: 'dist/css/'
-			},
-			vendor: {
-				expand: true,
-				src: 'vendor/**/*.js',
-				dest: 'dist/'
-			},
-			app: {
-				expand: true,
-				src: 'app/**/*.js',
-				dest: 'dist/'
-			}
-		},
 		compress: {
 			release: {
 				options: {
-					archive: "dist/<%= pkg.name %>.min.js.gz"
+                    mode: 'gzip'
 				},
-
-				files: ["dist/<%= pkg.name %>.min.js"]
+				files: [
+                    {expand: true, src: ['dist/<%= pkg.name %>.min.js'], ext: '.gz.js'}
+                ]
 			}
 		},
 		jsdoc : {
-			dist : {
-				src: ['app/*.js'],
+            release : {
+				src: ['app/**/*.js'],
 				options: {
 					destination: 'doc'
 				}
@@ -91,27 +76,34 @@ module.exports = function(grunt) {
 		cssmin: {
 			release: {
 				files: {
-					"dist/css/<%= pkg.name %>.min.css": ["dist/css/<%= pkg.name %>.css"]
+					"dist/assets/css/<%= pkg.name %>.min.css": ["dist/assets/css/<%= pkg.name %>.css"]
 				}
 			}
-		}
+		},
+        processhtml: {
+            release: {
+                files: {
+                    "dist/index.html": ["index.html"]
+                }
+            }
+        }
 	});
 
 	// These plugins provide necessary tasks.
 	require('load-grunt-tasks')(grunt, { scope: 'devDependencies' });
 	require('time-grunt')(grunt);
 
-	grunt.registerTask('backup', ['copy:fonts', 'copy:css', 'copy:vendor', 'copy:app']);
+	grunt.registerTask('backup', ['copy:assets', 'copy:vendor', 'copy:app']);
 
 	// JS distribution task.
-	grunt.registerTask('dist-js', ['concat', 'uglify']);
+	grunt.registerTask('dist-js', ['requirejs', 'compress']);
 
 	// CSS distribution task.
 	grunt.registerTask('less-compile', ['less:compileCore']);
-	grunt.registerTask('dist-css', ['cssmin:release']);
+	grunt.registerTask('dist-css', ['cssmin']);
 
 	// Default task.
 //	grunt.registerTask('default', ['clean', 'copy:release', 'dist-css', 'dist-js']);
-	grunt.registerTask('default', ['clean', 'backup', 'dist-css']);
+	grunt.registerTask('default', ['clean', 'backup', 'dist-css', 'dist-js', 'processhtml']);
 
 };
