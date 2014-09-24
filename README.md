@@ -1,4 +1,4 @@
-Dashboard Admin - Premium Admin Template
+Dashboard Admin - Premium Marionette Admin Template
 =========
 
 Dashboard Admin is a premium, full featured, responsive admin template that helps you get your project started quickly and with ease. Included are 20+ sample pages showcasing the many layouts and widgets you have at your disposal such as: buttons, grid layout, charting, notifications, and much more.
