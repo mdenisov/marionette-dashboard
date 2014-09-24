@@ -7,6 +7,8 @@
     "backbone.marionette": "~1.7.4",
 	"backbone.validation": "latest",
     "backbone.paginator": "~0.8.1",
+    "backbone.localStorage": "~1.1.10",
+    "backbone-associations": "~0.6.2",
     "handlebars": "~2.0.0",
     "hbs": "latest",
     "json2":"latest",
@@ -15,6 +17,7 @@
     "spinjs": "latest",
     "requirejs": "~2.1.10",
     "requirejs-text": "latest",
-    "bootstrap": "latest"
+    "bootstrap": "~3.2.0",
+    "font-awesome": "latest"
   }
 }
