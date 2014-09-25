@@ -11,13 +11,14 @@ define([
 	'use strict';
 
 	return Marionette.Layout.extend({
-//		template: require('hbs!templates/layouts/default'),
 		template: tpl,
 		regions: {
-			sidebar:    '#sidebar',
-			header:     '#header',
-			content:    '#content',
-			navigation: '#navigation'
+            breadcrumb:     '#breadcrumb',
+			sidebar:        '#sidebar',
+			user:           '#avatar-block',
+			header:         '#header',
+			content:        '#content',
+			navigation:     '#navigation'
 		}
 	});
 });

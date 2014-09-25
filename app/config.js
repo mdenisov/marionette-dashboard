@@ -4,7 +4,7 @@ require.config({
         "vendor": 				"../vendor",
         "core": 				"core",
         "templates": 			"templates",
-        
+
         "almond":               "../vendor/almond/almond",
         "underscore": 			"../vendor/lodash/dist/lodash.underscore",
         "jquery": 				"../vendor/jquery/dist/jquery",
