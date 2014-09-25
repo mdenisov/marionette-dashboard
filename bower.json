@@ -10,7 +10,6 @@
     "backbone.paginator": "~0.8.1",
     "backbone.localStorage": "~1.1.10",
     "backbone-associations": "~0.6.2",
-    "handlebars": "~2.0.0",
     "hbs": "~0.4.0",
     "jquery": "~2.1.0",
     "jquery-cookie": "latest",

@@ -3,6 +3,8 @@ require.config({
     paths: {
         "vendor": 				"../vendor",
         "core": 				"core",
+        "templates": 			"templates",
+        
         "almond":               "../vendor/almond/almond",
         "underscore": 			"../vendor/lodash/dist/lodash.underscore",
         "jquery": 				"../vendor/jquery/dist/jquery",
@@ -10,11 +12,11 @@ require.config({
         "marionette":			"../vendor/backbone.marionette/lib/core/amd/backbone.marionette",
 		"backbone.wreqr":		"../vendor/backbone.wreqr/lib/backbone.wreqr",
 		"backbone.babysitter":  "../vendor/backbone.babysitter/lib/backbone.babysitter",
-        "handlebars":			"../vendor/handlebars/handlebars",
         "bootstrap":			"../vendor/bootstrap/dist/js/bootstrap",
         "hbs":					"../vendor/hbs/hbs",
         "i18nprecompile":		"../vendor/hbs/hbs/i18nprecompile",
         "json2":				"../vendor/hbs/hbs/json2",
+        "handlebars":			"../vendor/hbs/handlebars",
 
         // Plugins
         "backbone.validation":  "../vendor/backbone.validation/dist/backbone-validation-amd",
@@ -36,10 +38,6 @@ require.config({
         "marionette":{
             "deps":["underscore", "backbone", "jquery"],
             "exports":"Marionette"
-        },
-        //Handlebars
-        "handlebars":{
-            "exports":"Handlebars"
         },
         // Backbone.validation plugin that depends on Backbone
         "backbone.validation":["backbone"],
