@@ -2,20 +2,27 @@ require.config({
     urlArgs: 'v=' + (new Date()).getTime(),
     paths: {
         "vendor": 				"../vendor",
+        "core": 				"core",
         "almond":               "../vendor/almond/almond",
         "underscore": 			"../vendor/lodash/dist/lodash.underscore",
         "jquery": 				"../vendor/jquery/dist/jquery",
         "backbone": 			"../vendor/backbone/backbone",
         "marionette":			"../vendor/backbone.marionette/lib/core/amd/backbone.marionette",
+		"backbone.wreqr":		"../vendor/backbone.wreqr/lib/backbone.wreqr",
+		"backbone.babysitter":  "../vendor/backbone.babysitter/lib/backbone.babysitter",
         "handlebars":			"../vendor/handlebars/handlebars",
         "bootstrap":			"../vendor/bootstrap/dist/js/bootstrap",
         "hbs":					"../vendor/hbs/hbs",
-        "json2":				"../vendor/json2",
+        "i18nprecompile":		"../vendor/hbs/hbs/i18nprecompile",
+        "json2":				"../vendor/hbs/hbs/json2",
 
         // Plugins
         "backbone.validation":  "../vendor/backbone.validation/dist/backbone-validation-amd",
         "text":					"../vendor/requirejs-text/text",
-		"cookie":     			"../vendor/jquery-cookie/jquery.cookie"
+		"cookie":     			"../vendor/jquery-cookie/jquery.cookie",
+
+		// Application
+		"app":					"core/app"
 	},
     shim:{
         // Backbone

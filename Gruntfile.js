@@ -73,6 +73,40 @@ module.exports = function(grunt) {
 				}
 			}
 		},
+		less: {
+			release: {
+				options: {
+//					strictMath: true,
+					sourceMap: true,
+					outputSourceFiles: true,
+					sourceMapURL: '<%= pkg.name %>.css.map',
+					sourceMapFilename: 'dist/css/<%= pkg.name %>.css.map'
+				},
+				files: {
+					'assets/css/<%= pkg.name %>.css': 'assets/less/<%= pkg.name %>.less'
+				}
+			}
+		},
+		autoprefixer: {
+			options: {
+				browsers: [
+					'Android 2.3',
+					'Android >= 4',
+					'Chrome >= 20',
+					'Firefox >= 24', // Firefox 24 is the latest ESR
+					'Explorer >= 8',
+					'iOS >= 6',
+					'Opera >= 12',
+					'Safari >= 6'
+				]
+			},
+			release: {
+				options: {
+					map: true
+				},
+				src: 'assets/css/<%= pkg.name %>.css'
+			}
+		},
 		cssmin: {
 			release: {
 				files: {
@@ -99,8 +133,8 @@ module.exports = function(grunt) {
 	grunt.registerTask('dist-js', ['requirejs', 'compress']);
 
 	// CSS distribution task.
-	grunt.registerTask('less-compile', ['less:compileCore']);
-	grunt.registerTask('dist-css', ['cssmin']);
+	grunt.registerTask('less-compile', ['less', 'autoprefixer']);
+	grunt.registerTask('dist-css', ['less-compile', 'cssmin']);
 
 	// Default task.
 //	grunt.registerTask('default', ['clean', 'copy:release', 'dist-css', 'dist-js']);
