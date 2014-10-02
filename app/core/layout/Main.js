@@ -7,11 +7,11 @@ define([
 	'app',
 	'hbs!templates/layout/main'
 
-], function ($, _, Marionette, App, tpl) {
+], function ($, _, Marionette, App, template) {
 	'use strict';
 
 	return Marionette.Layout.extend({
-		template: tpl,
+		template: template,
 		regions: {
             breadcrumb:     '#breadcrumb',
 			sidebar:        '#sidebar',

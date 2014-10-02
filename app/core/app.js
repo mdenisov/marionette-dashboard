@@ -8,7 +8,8 @@ define(function(require, exports, module) {
 		cookie = require("cookie"),
 		Backbone = require("backbone"),
 		Marionette = require("marionette"),
-		bootstrap = require("bootstrap");
+		bootstrap = require("bootstrap"),
+		Breadcrumb = require("core/views/Breadcrumb");
 
 	app = new Marionette.Application();
 
@@ -67,7 +68,7 @@ define(function(require, exports, module) {
 		if(Backbone.history){
 			Backbone.history.start();
 
-			if(this.getCurrentRoute() === "") {
+			if (this.getCurrentRoute() === "") {
 //				app.trigger("contacts:list");
 			}
 		}
@@ -84,6 +85,16 @@ define(function(require, exports, module) {
 		app.regionMain.currentView.content.show(view);
 	});
 
+	app.on('app:layout:show', function() {
+//		app.breadcrumb = new Breadcrumb();
+//
+//		app.breadcrumb.addBradcrumb([
+//			{'name': 'Home', link: '#/'}
+//		]);
+//
+//		app.regionMain.currentView.breadcrumb.show(app.breadcrumb);
+	});
+
 
 	app.initAppLayout = function() {
 		var Layout;
@@ -98,6 +109,8 @@ define(function(require, exports, module) {
 
 		// Inject the main layout into the #main region of the page.
 		app.regionMain.show(app.layout);
+
+		app.trigger('app:layout:show');
 	};
 
 	return app;
