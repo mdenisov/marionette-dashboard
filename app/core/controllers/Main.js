@@ -26,6 +26,17 @@ define([
 			});
 		},
 
+		help: function() {
+			console.log('Welcome to your help url');
+
+			var view;
+
+			new BasePage({
+				title: 'Help',
+				content: '<strong>UI</strong> Typography'
+			});
+		},
+
 		login: function() {
 
 		},
