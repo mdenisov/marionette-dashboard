@@ -4,19 +4,17 @@ define([
 	'underscore',
 	'marionette',
 
-	'app'
+	'app',
+	'hbs!templates/layout/empty'
 
-], function ($, _, Marionette, App) {
+], function ($, _, Marionette, App, tpl) {
 	'use strict';
 
 	return Marionette.Layout.extend({
-//		template: require('hbs!templates/layouts/default'),
-		template: require('text!templates/layout/empty'),
+		template: tpl,
 		regions: {
-			sidebar:    '#sidebar',
-			header:     '#header',
-			content:    '#content',
-			navigation: '#navigation'
+			header:         '#header',
+			content:        '#content'
 		}
 	});
 });

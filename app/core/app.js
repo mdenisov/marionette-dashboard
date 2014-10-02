@@ -5,6 +5,7 @@ define(function(require, exports, module) {
 	var app,
 		$ = require("jquery"),
 		_ = require("underscore"),
+		cookie = require("cookie"),
 		Backbone = require("backbone"),
 		Marionette = require("marionette"),
 		bootstrap = require("bootstrap");
@@ -13,11 +14,13 @@ define(function(require, exports, module) {
 
 	// application configuration
 	app.config = {
-		api: 'api'
+		api: 'api',
+		cookie: 'dashboard_'
 	};
 
 	// The root path to run the application through.
 	app.root = "/";
+	app.layout;
 
 	// Main Region
 	app.addRegions({
@@ -34,6 +37,14 @@ define(function(require, exports, module) {
 		return Backbone.history.fragment
 	};
 
+	app.setCookie = function(key, option) {
+		$.cookie(app.config.cookie + key, option, {path: app.root});
+	};
+
+	app.getCookie = function(key) {
+		$.cookie(app.config.cookie + key);
+	};
+
 
 	app.addInitializer(function(options) {
 		this.initAppLayout();
@@ -44,7 +55,7 @@ define(function(require, exports, module) {
 		});
 	});
 
-	app.on("initialize:before", function(options){
+	app.on("initialize:before", function(options) {
 		options || (options = {});
 		app.i18n = {
 			acceptedLanguages: options.acceptedLanguages || [],
@@ -52,22 +63,41 @@ define(function(require, exports, module) {
 		};
 	});
 
-	app.on("initialize:after", function(){
+	app.on("initialize:after", function() {
 		if(Backbone.history){
 			Backbone.history.start();
 
-			if(this.getCurrentRoute() === ""){
+			if(this.getCurrentRoute() === "") {
 //				app.trigger("contacts:list");
 			}
 		}
 	});
 
+	app.on("session:expired", function(options) {
+		var currentRoute = app.getCurrentRoute();
+
+		app.setCookie('route', currentRoute);
+	});
+
+	app.on('app:page:show', function(view) {
+		app.regionMain.currentView.content.close();
+		app.regionMain.currentView.content.show(view);
+	});
+
 
 	app.initAppLayout = function() {
-		var Layout = require("core/layout/Main");
+		var Layout;
+
+		if (1) {
+			Layout = require("core/layout/Main");
+		} else {
+			Layout = require("core/layout/Empty");
+		}
+
+		app.layout = new Layout();
 
 		// Inject the main layout into the #main region of the page.
-		app.regionMain.show(new Layout());
+		app.regionMain.show(app.layout);
 	};
 
 	return app;

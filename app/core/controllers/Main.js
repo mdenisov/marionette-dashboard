@@ -4,9 +4,10 @@ define([
 	'underscore',
 	'marionette',
 
-	'app'
+	'app',
+	'core/views/Base'
 
-], function ($, _, Marionette, App) {
+], function ($, _, Marionette, App, BasePage) {
 	'use strict';
 
 	var Main = {
@@ -16,10 +17,13 @@ define([
 
 			var view;
 
-//			view = new BasePage({
-//				title: '<strong>UI</strong> Typography',
-//				content: new PageWelcome()
-//			});
+			new BasePage({
+				title: '<strong>UI</strong> Typography',
+				content: '<strong>UI</strong> Typography',
+//				tools: {
+//					trash: true
+//				}
+			});
 		},
 
 		login: function() {
