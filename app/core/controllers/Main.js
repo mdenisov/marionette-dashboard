@@ -16,9 +16,6 @@ define([
 			new Page({
 				title: '<strong>UI</strong> Typography',
 				content: '<strong>UI</strong> Typography'
-//				tools: {
-//					trash: true
-//				}
 			});
 
 			App.breadcrumb.reset();
