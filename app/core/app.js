@@ -86,15 +86,7 @@ define(function(require, exports, module) {
 	});
 
 	app.on('app:layout:show', function() {
-		app.breadcrumb = Breadcrumb;
-
-		console.log(Breadcrumb);
-
-		app.breadcrumb.addAll([
-			{'name': 'Home', link: '#/'}
-		]);
-
-		app.regionMain.currentView.breadcrumb.show(app.breadcrumb);
+		app.initBreadcrumb();
 	});
 
 
@@ -113,6 +105,13 @@ define(function(require, exports, module) {
 		app.regionMain.show(app.layout);
 
 		app.trigger('app:layout:show');
+	};
+
+	app.initBreadcrumb = function() {
+		app.breadcrumb = Breadcrumb;
+		app.breadcrumb.reset();
+
+		app.regionMain.currentView.breadcrumb.show(app.breadcrumb);
 	};
 
 	return app;

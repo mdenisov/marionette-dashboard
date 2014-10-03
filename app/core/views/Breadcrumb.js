@@ -33,10 +33,7 @@ define([
 		className: "breadcrumb",
 		itemView: BreadcrumbItemView,
 
-		homeModel: new Breadcrumb({
-			link: '#/',
-			name: 'Home'
-		}),
+		homeModel: {link: '#/', name: 'Home'},
 
 		collection: new BreadcrumbList(),
 
@@ -52,11 +49,15 @@ define([
 		},
 
 		addAll: function(list) {
-			this.collection.reset([]);
-
 			_.each(list, _.bind(function(breadcrumb) {
 				this.addOne(breadcrumb);
 			}, this));
+		},
+
+		reset: function(list) {
+			this.collection.reset([]);
+			this.addOne(this.homeModel);
+			this.addAll(list);
 		}
 	});
 

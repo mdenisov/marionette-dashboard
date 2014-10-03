@@ -24,6 +24,8 @@ define([
 //					trash: true
 //				}
 			});
+
+			App.breadcrumb.reset();
 		},
 
 		help: function() {
@@ -31,10 +33,15 @@ define([
 
 			var view;
 
-			new BasePage({
+			new Page({
 				title: 'Help',
 				content: '<strong>UI</strong> Typography'
 			});
+
+			App.breadcrumb.reset([{
+				'link': '#/help',
+				'name': 'Help'
+			}]);
 		},
 
 		login: function() {
