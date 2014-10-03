@@ -86,13 +86,15 @@ define(function(require, exports, module) {
 	});
 
 	app.on('app:layout:show', function() {
-//		app.breadcrumb = new Breadcrumb();
-//
-//		app.breadcrumb.addBradcrumb([
-//			{'name': 'Home', link: '#/'}
-//		]);
-//
-//		app.regionMain.currentView.breadcrumb.show(app.breadcrumb);
+		app.breadcrumb = Breadcrumb;
+
+		console.log(Breadcrumb);
+
+		app.breadcrumb.addAll([
+			{'name': 'Home', link: '#/'}
+		]);
+
+		app.regionMain.currentView.breadcrumb.show(app.breadcrumb);
 	});
 
 

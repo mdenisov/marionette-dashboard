@@ -28,7 +28,11 @@ define([
 		},
 
 		serializeData: function() {
-			return this.options;
+			if (this.model) {
+				return this.model;
+			} else {
+				return this.options;
+			}
 		},
 
 		initialize: function (options) {

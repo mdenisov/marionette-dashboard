@@ -3,66 +3,60 @@ define([
 	'jquery',
 	'underscore',
 	'marionette',
+	'handlebars',
 
 	'app'
 
-], function ($, _, Marionette, App) {
+], function ($, _, Marionette, Handlebars, App) {
 	'use strict';
 
 	var instance;
 
 	var Breadcrumb = Backbone.Model.extend({
-		defaults:{
-			link        : '',
-			name        : ''
+		defaults: {
+			link: '',
+			name: ''
 		}
 	});
 
 	var BreadcrumbList = Backbone.Collection.extend({
-		model : Breadcrumb
+		model: Breadcrumb
 	});
 
-	var BreadcrumbView = Marionette.ItemView.extend({
-		tagName : 'li',
-
-		render : function() {
-			var liData = '<a href="' + this.model.get('link') + '">' + this.model.get('name') + '</a>';
-
-			$(this.el).html(liData);
-
-			return this;
-		}
+	var BreadcrumbItemView = Marionette.ItemView.extend({
+		tagName: "li",
+		template: Handlebars.compile('<a href="{{this.link}}">{{this.name}}</a>')
 	});
 
 	var BreadcrumbListView = Marionette.CollectionView.extend({
 		tagName: "ol",
 		className: "breadcrumb",
-		id: "breadcrumb",
+		itemView: BreadcrumbItemView,
 
-		itemView: BreadcrumbView,
+		homeModel: new Breadcrumb({
+			link: '#/',
+			name: 'Home'
+		}),
 
-		initialize : function() {
-			this.collection = new BreadcrumbList();
+		collection: new BreadcrumbList(),
 
-			this.collection.bind('add', this.appendBreadcrumb);
-
-			//this.collection.add({link: '#', name: 'You are here : '});
-			this.listenTo(this.collection, "add", this.appendBreadcrumb);
+		initialize: function() {
+			this.listenTo(this.collection, 'change', this.render);
+			this.render();
 		},
 
-		addBradcrumb: function(breadcrumbList){
-			breadcrumbList.forEach(function(breadcrumb) {
-				console.log(breadcrumb);
-				this.collection.add(breadcrumb);
-			}, this);
+		addOne: function(item) {
+			var breadcrumb = new Breadcrumb(item);
+
+			this.collection.add(breadcrumb);
 		},
 
-		appendBreadcrumb: function(breadcrumb) {
-			var breadcrumbView = new BreadcrumbView({
-				model : breadcrumb
-			});
+		addAll: function(list) {
+			this.collection.reset([]);
 
-			$(this.el).append(breadcrumbView.render().el);
+			_.each(list, _.bind(function(breadcrumb) {
+				this.addOne(breadcrumb);
+			}, this));
 		}
 	});
 
@@ -75,5 +69,5 @@ define([
 		return instance;
 	};
 
-	return BreadcrumbListView;
+	return getInstance();
 });

@@ -7,7 +7,7 @@ define([
 	'app',
 	'core/views/Base'
 
-], function ($, _, Marionette, App, BasePage) {
+], function ($, _, Marionette, App, Page) {
 	'use strict';
 
 	var Main = {
@@ -17,7 +17,7 @@ define([
 
 			var view;
 
-			new BasePage({
+			new Page({
 				title: '<strong>UI</strong> Typography',
 				content: '<strong>UI</strong> Typography',
 //				tools: {
