@@ -13,13 +13,9 @@ define([
 	var Main = {
 
 		home: function() {
-			console.log('Welcome to your home url');
-
-			var view;
-
 			new Page({
 				title: '<strong>UI</strong> Typography',
-				content: '<strong>UI</strong> Typography',
+				content: '<strong>UI</strong> Typography'
 //				tools: {
 //					trash: true
 //				}
@@ -29,19 +25,17 @@ define([
 		},
 
 		help: function() {
-			console.log('Welcome to your help url');
+			require(['text!templates/pages/help.html'], function(template) {
+				new Page({
+					title: 'Help',
+					content: template
+				});
 
-			var view;
-
-			new Page({
-				title: 'Help',
-				content: '<strong>UI</strong> Typography'
+				App.breadcrumb.reset([{
+					'link': '#/help',
+					'name': 'Help'
+				}]);
 			});
-
-			App.breadcrumb.reset([{
-				'link': '#/help',
-				'name': 'Help'
-			}]);
 		},
 
 		login: function() {
