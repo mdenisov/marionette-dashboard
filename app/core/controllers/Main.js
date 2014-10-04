@@ -22,10 +22,22 @@ define([
 		},
 
 		help: function() {
-			require(['text!templates/pages/help.html'], function(template) {
+			require(['hbs!templates/pages/help'], function(template) {
+                var view = Marionette.ItemView.extend({
+                    template: template,
+
+                    events: {
+                        'click h1': 'onHeaderClick'
+                    },
+
+                    onHeaderClick: function() {
+                        console.log('1234567');
+                    }
+                });
+
 				new Page({
 					title: 'Help',
-					content: template
+					content: new view()
 				});
 
 				App.breadcrumb.reset([{

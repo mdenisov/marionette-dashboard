@@ -67,7 +67,7 @@ define([
         },
 
         setContent: function() {
-            if (this.options.content && typeof this.options.content === "Object") {
+            if (this.options.content && typeof this.options.content === "object") {
                 this.content = this.options.content;
             } else {
                 this.content = new Content(this.options);
