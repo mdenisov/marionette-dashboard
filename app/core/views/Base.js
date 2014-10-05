@@ -50,6 +50,7 @@ define([
         tools: null,
         header: null,
         content: null,
+        template: null,
 
         initialize: function(options) {
             this.options = options;
@@ -57,12 +58,29 @@ define([
 
             App.trigger('app:page:show', this.layout);
 
+            if (this.options.template) {
+                this.loadTemplate();
+            } else {
+                this.process();
+            }
+        },
+
+        loadTemplate: function() {
+            require(['hbs!' + this.options.template], _.bind(function(template) {
+                this.options.template = template;
+                this.template = template;
+                this.process();
+            }, this));
+        },
+
+        process: function() {
             this.setHeader();
             this.setContent();
+            this.setBreadcrumb();
         },
 
         setHeader: function() {
-            this.header = new Header(this.options);
+            this.header = new Header({title: this.options.title});
             this.layout.header.show(this.header);
         },
 
@@ -74,6 +92,19 @@ define([
             }
 
             this.layout.content.show(this.content);
+        },
+
+        setBreadcrumb: function() {
+            var link = App.getCurrentRoute(),
+                name = this.options.title;
+            if (link !== '' && link !== '/' && link !== 'home') {
+                App.breadcrumb.reset([{
+                    'link': '#/' + link,
+                    'name': name
+                }]);
+            } else {
+                App.breadcrumb.reset([]);
+            }
         }
 
     });

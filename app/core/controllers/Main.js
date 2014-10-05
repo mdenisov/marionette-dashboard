@@ -13,12 +13,10 @@ define([
 	var Main = {
 
 		home: function() {
-			new Page({
-				title: '<strong>UI</strong> Typography',
-				content: '<strong>UI</strong> Typography'
-			});
-
-			App.breadcrumb.reset();
+            new Page({
+                title: 'Home',
+                template: 'templates/pages/home'
+            });
 		},
 
 		help: function() {
@@ -39,11 +37,6 @@ define([
 					title: 'Help',
 					content: new view()
 				});
-
-				App.breadcrumb.reset([{
-					'link': '#/help',
-					'name': 'Help'
-				}]);
 			});
 		},
 
