@@ -34,24 +34,8 @@ define([
     var Content = Marionette.ItemView.extend({
         template: Handlebars.compile('{{{this.content}}}'),
 
-        events: {
-            'app:page:action': 'onToolItemClick'
-        },
-
-        initialize: function() {
-            this.on('app:page:action', function(event) {
-                console.log(event);
-            });
-
-            console.log(this);
-        },
-
         serializeData: function() {
             return this.options;
-        },
-
-        onToolItemClick: function(event) {
-            return false;
         }
     });
 

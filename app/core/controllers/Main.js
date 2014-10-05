@@ -31,6 +31,10 @@ define([
 
                     onHeaderClick: function() {
                         console.log('1234567');
+                    },
+
+                    onCollapse: function() {
+                        this.$el.toggle();
                     }
                 });
 
