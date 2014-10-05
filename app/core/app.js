@@ -89,6 +89,14 @@ define(function(require, exports, module) {
 		app.initBreadcrumb();
 	});
 
+    app.on('app:page:action', function(event) {
+        try {
+            app.regionMain.currentView.content.currentView.content.currentView.trigger('app:page:action', event);
+        } catch (error) {
+
+        }
+    });
+
 
 	app.initAppLayout = function() {
 		var Layout;

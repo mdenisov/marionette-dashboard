@@ -6,9 +6,10 @@ define([
     'handlebars',
 
 	'app',
-	'hbs!templates/layout/page'
+	'hbs!templates/layout/page',
+    'hbs!templates/layout/tools'
 
-], function ($, _, Marionette, Handlebars, App, template) {
+], function ($, _, Marionette, Handlebars, App, template, tools) {
 	'use strict';
 
     var Layout = Marionette.Layout.extend({
@@ -33,14 +34,47 @@ define([
     var Content = Marionette.ItemView.extend({
         template: Handlebars.compile('{{{this.content}}}'),
 
+        events: {
+            'app:page:action': 'onToolItemClick'
+        },
+
+        initialize: function() {
+            this.on('app:page:action', function(event) {
+                console.log(event);
+            });
+
+            console.log(this);
+        },
+
         serializeData: function() {
             return this.options;
+        },
+
+        onToolItemClick: function(event) {
+            return false;
         }
     });
 
     var Tools = Marionette.ItemView.extend({
-        tagName: 'h2',
-        template: Handlebars.compile('<h2>{{{this.title}}}</h2>')
+        template: tools,
+
+        ui: {
+            tool: '.panel-tools .btn'
+        },
+
+        events: {
+            'click .panel-tools .btn': 'onToolItemClick'
+        },
+
+        serializeData: function() {
+            return this.options;
+        },
+
+        onToolItemClick: function(event) {
+            App.trigger('app:page:action', event);
+
+            return false;
+        }
     });
 
     return Backbone.Model.extend({
@@ -75,6 +109,7 @@ define([
 
         process: function() {
             this.setHeader();
+            this.setTools();
             this.setContent();
             this.setBreadcrumb();
         },
@@ -82,6 +117,13 @@ define([
         setHeader: function() {
             this.header = new Header({title: this.options.title});
             this.layout.header.show(this.header);
+        },
+
+        setTools: function() {
+            if (this.options.tools) {
+                this.tools = new Tools({tools: this.options.tools});
+                this.layout.tools.show(this.tools);
+            }
         },
 
         setContent: function() {
@@ -108,40 +150,4 @@ define([
         }
 
     });
-
-
-	return Marionette.ItemView.extend({
-		template: template,
-
-		options: {
-//			tools: {
-//				trash: true
-//			}
-		},
-
-		ui: {
-			tool: '.panel-tools .btn'
-		},
-
-		events: {
-			'click .panel-tools .btn': 'onToolItemClick'
-		},
-
-		serializeData: function() {
-			if (this.model) {
-				return this.model;
-			} else {
-				return this.options;
-			}
-		},
-
-		initialize: function (options) {
-			App.trigger('app:page:show', this);
-		},
-
-		onToolItemClick: function(event) {
-			console.log(event);
-		}
-
-	});
 });
