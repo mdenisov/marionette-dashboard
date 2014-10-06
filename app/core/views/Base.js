@@ -141,6 +141,8 @@ define([
 				}
 
                 this.views.content = new Content(options.toJSON());
+
+				options.destroy();
             }
 
             this.layout.content.show(this.views.content);

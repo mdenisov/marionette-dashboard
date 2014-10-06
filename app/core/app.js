@@ -110,6 +110,7 @@ define(function(require, exports, module) {
 		app.layout = new Layout();
 
 		// Inject the main layout into the #main region of the page.
+		app.regionMain.close();
 		app.regionMain.show(app.layout);
 
 		app.trigger('app:layout:show');
