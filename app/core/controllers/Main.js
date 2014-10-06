@@ -15,7 +15,7 @@ define([
 
 		home: function() {
             new Page({
-                title: 'Главная',
+//                title: 'Главная',
                 template: 'templates/pages/home'
             });
 		},

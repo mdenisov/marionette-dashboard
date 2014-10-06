@@ -23,6 +23,7 @@ define([
     });
 
     var Header = Marionette.ItemView.extend({
+		className: 'panel-heading',
         template: Handlebars.compile('<h2>{{{this.title}}}</h2> {{#if this.subtitle}}<label class="color">{{{this.subtitle}}}</label>{{/if}} '),
 
         serializeData: function() {
@@ -63,10 +64,8 @@ define([
     return Backbone.Model.extend({
 
 		layout: null,
-		header: null,
-		tools: null,
-		content: null,
 		template: null,
+		views: {},
 
         initialize: function(options) {
             this.layout = new Layout();
@@ -101,8 +100,6 @@ define([
 				this.unset('template');
 				this.template = options.template;
 			}
-
-			console.log(this.toJSON());
 		},
 
         loadTemplate: function() {
@@ -120,20 +117,22 @@ define([
         },
 
         setHeader: function() {
-            this.header = new Header(this.toJSON());
-            this.layout.header.show(this.header);
+			if (this.has('title')) {
+				this.views.header = new Header(this.toJSON());
+				this.layout.header.show(this.views.header);
+			}
         },
 
         setTools: function() {
             if (this.has('tools')) {
-                this.tools = new Tools(this.toJSON());
-                this.layout.tools.show(this.tools);
+                this.views.tools = new Tools(this.toJSON());
+                this.layout.tools.show(this.views.tools);
             }
         },
 
         setContent: function() {
             if (this.has('content') && typeof this.get('content') === "object") {
-                this.content = this.get('content');
+                this.views.content = this.get('content');
             } else {
 				var options = new Backbone.Model(this.toJSON());
 
@@ -141,10 +140,10 @@ define([
 					options.set('template', this.template);
 				}
 
-                this.content = new Content(options.toJSON());
+                this.views.content = new Content(options.toJSON());
             }
 
-            this.layout.content.show(this.content);
+            this.layout.content.show(this.views.content);
         },
 
         setBreadcrumb: function() {
