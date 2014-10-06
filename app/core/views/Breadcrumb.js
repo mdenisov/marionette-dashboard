@@ -33,7 +33,7 @@ define([
 		className: "breadcrumb",
 		itemView: BreadcrumbItemView,
 
-		homeModel: {link: '#/', name: 'Home'},
+		homeModel: {link: '#/', name: 'Главная'},
 
 		collection: new BreadcrumbList(),
 

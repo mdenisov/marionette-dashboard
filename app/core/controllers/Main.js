@@ -15,7 +15,7 @@ define([
 
 		home: function() {
             new Page({
-                title: 'Home',
+                title: 'Главная',
                 template: 'templates/pages/home'
             });
 		},
@@ -39,7 +39,8 @@ define([
                 });
 
 				new Page({
-					title: 'Help',
+					title: 'Помощь',
+					subtitle: 'Возможно, здесь вы найдете ответ на свой вопрос',
 					content: new view(),
                     tools: {
                         collapse: true
