@@ -5,14 +5,16 @@ require(["config"], function() {
 		'jquery',
 		'underscore',
 		'backbone',
+		'lodash',
 
 		"app",
+		"core/modules",
 		"modules",
 
 		'core/routers/Main',
 //		'routers/User'
 
-	], function ($, _, Backbone, App, modules, MainRouter, UserRouter) {
+	], function ($, _, Backbone, lodash, App, coreModules, userModules, MainRouter, UserRouter) {
 
 		'use strict';
 
@@ -27,11 +29,15 @@ require(["config"], function() {
 			},
 
 			initModules: function() {
-				this.modulesCount = _.size(modules);
+				this.modules = lodash.merge(coreModules, userModules);
 
-				if (modules && this.modulesCount > 0) {
+				console.log(this.modules);
 
-					_.each(modules, _.bind(function(part, index) {
+				this.modulesCount = _.size(this.modules);
+
+				if (this.modulesCount > 0) {
+
+					_.each(this.modules, _.bind(function(part, index) {
 						if (part.module && typeof part.module !== "undefined") {
 
 							this.modulesLoaded++;

@@ -5,10 +5,10 @@ define([
 	'marionette',
 
 	'app',
-	'core/views/Base',
-	'core/views/Page'
+	'core/views/Page',
+	'core/views/BaseView'
 
-], function ($, _, Marionette, App, Page, BasePage) {
+], function ($, _, Marionette, App, Page, BaseView) {
 	'use strict';
 
 	var Main = {
@@ -22,7 +22,7 @@ define([
 
 		help: function() {
 			require(['hbs!templates/pages/help'], function(template) {
-                var view = BasePage.extend({
+                var view = BaseView.extend({
                     template: template,
 
                     events: {

@@ -123,6 +123,23 @@ define(function(require, exports, module) {
 		app.regionMain.currentView.breadcrumb.show(app.breadcrumb);
 	};
 
-	return app;
+	app.module = function(additionalProps) {
+		var module = {
+			options: {},
+			router: {},
+			controller: {},
+			views: {},
+			models: {},
+			collections: {},
+
+			initialize: function(options) {
+
+			}
+		};
+
+		return _.extend(module, additionalProps);
+	};
+
+	module.exports = app;
 
 });

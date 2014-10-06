@@ -7,6 +7,7 @@ require.config({
 
         "almond":               "../vendor/almond/almond",
         "underscore": 			"../vendor/lodash/dist/lodash.underscore",
+        "lodash": 				"../vendor/lodash/dist/lodash",
         "jquery": 				"../vendor/jquery/dist/jquery",
         "backbone": 			"../vendor/backbone/backbone",
         "marionette":			"../vendor/backbone.marionette/lib/core/amd/backbone.marionette",
