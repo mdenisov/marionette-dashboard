@@ -21,8 +21,6 @@ define([
 	};
 
 	var Router = Marionette.AppRouter.extend({
-		controller: Controller,
-
 		appRoutes: {
 			'profile': 'profile'
 		}
@@ -35,7 +33,9 @@ define([
 
 		this.options = options;
 
-		this.router = new Router();
+		this.router = new Router({
+			controller: Controller
+		});
 	};
 
 	return module;
