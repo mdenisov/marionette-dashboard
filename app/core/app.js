@@ -6,6 +6,7 @@ define(function(require, exports, module) {
 		$ = require("jquery"),
 		_ = require("underscore"),
 		cookie = require("cookie"),
+		session = require("core/session"),
 		Backbone = require("backbone"),
 		Marionette = require("marionette"),
 		bootstrap = require("bootstrap"),
@@ -86,7 +87,10 @@ define(function(require, exports, module) {
 	});
 
 	app.on('app:layout:show', function() {
-		app.initBreadcrumb();
+
+        if (session.isAuthenticated()) {
+		    app.initBreadcrumb();
+        }
 	});
 
     app.on('app:page:action', function(event) {
@@ -101,7 +105,9 @@ define(function(require, exports, module) {
 	app.initAppLayout = function() {
 		var Layout;
 
-		if (1) {
+        console.log(session.isAuthenticated());
+
+		if (session.isAuthenticated()) {
 			Layout = require("core/layout/Main");
 		} else {
 			Layout = require("core/layout/Empty");

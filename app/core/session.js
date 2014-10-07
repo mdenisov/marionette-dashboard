@@ -8,6 +8,10 @@ define([
     'jquery',
     'underscore',
     'backbone',
+
+    // Auth module
+    'core/auth',
+
     'cookie'
 
 ], function($, _, Backbone) {

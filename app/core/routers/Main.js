@@ -14,9 +14,7 @@ define([
 		appRoutes: {
 			''         : 'home',
 			'home'     : 'home',
-			'help'     : 'help',
-			'login'    : 'login',
-			'logout'   : 'logout'
+			'help'     : 'help'
 		}
 
 	});

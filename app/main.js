@@ -11,10 +11,11 @@ require(["config"], function() {
 		"core/modules",
 		"modules",
 
+		'core/routers/Auth',
 		'core/routers/Main',
-//		'routers/User'
+		'core/routers/User'
 
-	], function ($, _, Backbone, lodash, App, coreModules, userModules, MainRouter, UserRouter) {
+	], function ($, _, Backbone, lodash, App, coreModules, userModules, AuthRouter, MainRouter, UserRouter) {
 
 		'use strict';
 
@@ -30,9 +31,6 @@ require(["config"], function() {
 
 			initModules: function() {
 				this.modules = lodash.merge(coreModules, userModules);
-
-				console.log(this.modules);
-
 				this.modulesCount = _.size(this.modules);
 
 				if (this.modulesCount > 0) {
@@ -49,25 +47,13 @@ require(["config"], function() {
 							if (this.modulesCount === this.modulesLoaded) {
 								this.initApplication();
 							}
-
-
-//							require([part.module], _.bind(function(module) {
-//								this.modulesLoaded++;
-//
-//								part.options = part.options || {};
-//
-////								console.log(part.module.initialize());
-//
-//								module.initialize(part.options);
-//
-//								if (this.modulesCount === this.modulesLoaded) {
-//									this.initApplication();
-//								}
-//							}, this));
 						}
 					}, this));
+
 				} else {
+
 					this.initApplication();
+
 				}
 			},
 
@@ -75,8 +61,9 @@ require(["config"], function() {
 			initApplication: function() {
 				var options = {
 					routers: {
+						auth: AuthRouter,
 						main: MainRouter,
-//						user: UserRouter
+						user: UserRouter
 					}
 				};
 

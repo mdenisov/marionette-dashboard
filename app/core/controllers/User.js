@@ -11,16 +11,16 @@ define([
 ], function ($, _, Marionette, App, Page, BaseView) {
 	'use strict';
 
-	var Main = {
+	var User = {
 
-		home: function() {
+		user: function() {
             new Page({
-//                title: 'Главная',
+                title: 'Профиль',
                 template: 'templates/pages/home'
             });
 		},
 
-		help: function() {
+		settings: function() {
 			require(['hbs!templates/pages/help'], function(template) {
                 var view = BaseView.extend({
                     template: template,
@@ -39,7 +39,7 @@ define([
                 });
 
 				new Page({
-					title: 'Помощь',
+					title: 'Настройки',
 					subtitle: 'Возможно, здесь вы найдете ответ на свой вопрос',
 					content: new view(),
                     tools: {
@@ -51,5 +51,5 @@ define([
 
 	};
 
-	return Main;
+	return User;
 });
