@@ -6,23 +6,22 @@ define([
 
 	'app',
     'core/models/User',
-    'core/session',
 	'core/views/EmptyPage'
 
-], function ($, _, Marionette, App, User, session, Page) {
+], function ($, _, Marionette, App, User, Page) {
 	'use strict';
 
 	var Auth = {
 
 		login: function(args) {
 
-            if(session.isAuthenticated()) {
-                App.navigate("#/", {trigger: true});
+            if(App.session.isAuthenticated()) {
+                App.navigate("#/");
             }
 
             var UserModel = new User({
-                email  : session.get('email'),
-                name  : session.get('name')
+                email  : App.session.get('email'),
+                name  : App.session.get('name')
             });
 
             var view = new Page({
@@ -34,56 +33,30 @@ define([
 
         logout: function() {
 
-            session.destroy();
+            App.session.destroy();
 
-            App.navigate("#/");
+            App.trigger('app:user:logout');
+            App.navigate("#/login");
 
         },
 
         authenticate: function() {
-            var self     = this;
             var email    = this.$('input[name="email"]').val();
             var password = this.$('input[name="password"]').val();
 
-            $.when(this.model.login({
-					email: email,
-					password: password
-				})).then(
-                function (model, response, options){
-//                    var token = model.get('token');
+            this.model.login({
+                email: email,
+                password: password
+            }, {
+                success: function(res) {
+                    App.session.load();
+                    App.trigger('app:user:logon');
+                    App.navigate('#/');
+                }, error: function(res) {
 
-                    console.log(arguments);
-
-//                    session.save(model);
-//                    session.load();
-
-//                    vent.trigger("app:logon");
-
-//                    App.navigate("#/", {trigger: true});
-                },
-                function (model, xhr, options){
-                    self.$el.find('.alert').show();
                 }
-            );
-
-//            $.when(this.model.authenticate(email, password)).then(
-//                function (model, response, options){
-//                    var token = model.get('token');
-//
-//                    console.log(model);
-//
-////                    session.save(model);
-////                    session.load();
-//
-////                    vent.trigger("app:logon");
-//
-////                    App.navigate("#/", {trigger: true});
-//                },
-//                function (model, xhr, options){
-//                    self.$el.find('.alert').show();
-//                }
-//            );
-        },
+            });
+        }
 
 	};
 

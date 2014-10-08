@@ -2,7 +2,7 @@
 
     session_start(); // Add this to the top of the file
 
-    if(!empty($_POST['method']) && $_POST['method'] == 'login') {
+    if(!empty($_GET['method']) && $_GET['method'] == 'login') {
 
         if(!empty($_POST['email']) && !empty($_POST['password'])) {
             // normally you would load credentials from a database.
@@ -10,14 +10,16 @@
             if($_POST['email'] == 'admin@test.com' && $_POST['password'] == 'admin') {
 
                 $user = array(
+                    "id" => 1,
                     "email" => "admin@test.com",
                     "name" => "Maxim Denisov",
+                    "photo" => "assets/img/avatar.jpg",
                     "role" => "admin",
                     "token" => "***fakeAccessToken***"
                 );
                 $_SESSION['user'] = $user;
 
-                echo json_encode($user);
+                echo json_encode(array("user" => $user));
 
             } else {
 

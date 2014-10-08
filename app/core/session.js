@@ -19,13 +19,6 @@ define([
 
     var Session = Backbone.Model.extend({
 
-        defaults: {
-            userId: '',
-            userName: '',
-            userPhoto: 'assets/img/avatar.jpg',
-            accessToken: null
-        },
-
         // Creating a new session instance will attempt to load the user cookie.
         initialize: function() {
             this.load();
@@ -40,14 +33,18 @@ define([
         save: function(model) {
             $.cookie('accessToken', model.get('token'));
             $.cookie('email', model.get('email'));
+            $.cookie('userId', model.get('id'));
             $.cookie('userName', model.get('name'));
+            $.cookie('userPhoto', model.get('photo'));
         },
 
         // Loads the user's credentials from the cookie data.
         load: function() {
             this.set('accessToken', $.cookie('accessToken'));
             this.set('email', $.cookie('email'));
+            this.set('userId', $.cookie('userId'));
             this.set('userName', $.cookie('userName'));
+            this.set('userPhoto', $.cookie('userPhoto'));
 
             //set the Authorization header
             Backbone.BasicAuth.set($.cookie('accessToken'));

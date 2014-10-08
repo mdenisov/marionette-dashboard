@@ -12,6 +12,7 @@ define([
         controller: Controller,
 
         appRoutes: {
+            ':*'        : 'login',
             'login'    : 'login',
             'logout'   : 'logout'
         }

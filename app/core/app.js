@@ -23,6 +23,7 @@ define(function(require, exports, module) {
 	// The root path to run the application through.
 	app.root = "/";
 	app.layout;
+	app.session = session;
 
 	// Main Region
 	app.addRegions({
@@ -69,11 +70,23 @@ define(function(require, exports, module) {
 		if(Backbone.history){
 			Backbone.history.start();
 
+            Backbone.on('route', function() {
+                console.log(arguments);
+            });
+
 			if (this.getCurrentRoute() === "") {
 //				app.trigger("contacts:list");
 			}
 		}
 	});
+
+    app.on("app:user:logon", function(options) {
+        app.initAppLayout();
+    });
+
+    app.on("app:user:logout", function(options) {
+        app.initAppLayout();
+    });
 
 	app.on("session:expired", function(options) {
 		var currentRoute = app.getCurrentRoute();
@@ -88,9 +101,10 @@ define(function(require, exports, module) {
 
 	app.on('app:layout:show', function() {
 
-        if (session.isAuthenticated()) {
+        if (app.session.isAuthenticated()) {
 		    app.initBreadcrumb();
         }
+
 	});
 
     app.on('app:page:action', function(event) {
@@ -105,9 +119,9 @@ define(function(require, exports, module) {
 	app.initAppLayout = function() {
 		var Layout;
 
-        console.log(session.isAuthenticated());
+        app.session.load();
 
-		if (session.isAuthenticated()) {
+		if (app.session.isAuthenticated()) {
 			Layout = require("core/layout/Main");
 		} else {
 			Layout = require("core/layout/Empty");

@@ -9,40 +9,16 @@ define([
 
     return Backbone.Model.extend({
 
-		url: function(){
+		url: function() {
 			return App.config.api + '/index.php';
 		},
 
         defaults: {
+            id: '',
             name: '',
             email: '',
             role: '',
-            avatar: ''
-        },
-
-        authenticate: function (email, password) {
-            var authToken = btoa(email + ':' + password);
-            var dfd = new $.Deferred();
-
-            this.set({
-                email : email
-            },{
-                silent: true
-            });
-
-            this.fetch({
-                beforeSend: function (xhr) {
-                    xhr.setRequestHeader("Authorization", "Basic " + authToken);
-                },
-                success: function(model, response, options) {
-                    dfd.resolve(model, response, options);
-                },
-                error: function(model, xhr, options) {
-                    dfd.reject(model, xhr, options);
-                }
-            });
-
-            return dfd.promise();
+            photo: ''
         },
 
 		/*
@@ -58,7 +34,6 @@ define([
 
 			$.ajax({
 				url: this.url() + '?method=' + opts.method,
-				contentType: 'application/json',
 				dataType: 'json',
 				type: 'POST',
 				beforeSend: function(xhr) {
@@ -66,16 +41,15 @@ define([
 //					var token = $('meta[name="csrf-token"]').attr('content');
 //					if (token) xhr.setRequestHeader('X-CSRF-Token', token);
 				},
-				data:  JSON.stringify( _.omit(opts, 'method') ),
+				data: _.omit(opts, 'method'),
 				success: function(res) {
-
 					if( !res.error ){
 						if(_.indexOf(['login', 'signup'], opts.method) !== -1){
 
-							self.updateSessionUser( res.user || {} );
-							self.set({ user_id: res.user.id, logged_in: true });
-						} else {
+                            self.set(res.user || {});
+                            App.session.save(self);
 
+						} else {
 							self.set({ logged_in: false });
 						}
 
