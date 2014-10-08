@@ -70,10 +70,6 @@ define(function(require, exports, module) {
 		if(Backbone.history){
 			Backbone.history.start();
 
-            Backbone.on('route', function() {
-                console.log(arguments);
-            });
-
 			if (this.getCurrentRoute() === "") {
 //				app.trigger("contacts:list");
 			}
@@ -127,7 +123,7 @@ define(function(require, exports, module) {
 			Layout = require("core/layout/Empty");
 		}
 
-		app.layout = new Layout();
+		app.layout = new Layout({model: app.session});
 
 		// Inject the main layout into the #main region of the page.
 		app.regionMain.close();
