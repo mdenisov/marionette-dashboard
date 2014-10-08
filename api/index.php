@@ -2,29 +2,33 @@
 
     session_start(); // Add this to the top of the file
 
-    if(!empty($_POST['email']) && !empty($_POST['password'])) {
-        // normally you would load credentials from a database.
-        // This is just an example and is certainly not secure
-        if($_POST['email'] == 'admin@test.com' && $_POST['password'] == 'admin') {
+    if(!empty($_POST['method']) && $_POST['method'] == 'login') {
 
-            $user = array(
-                "email" => "admin@test.com",
-                "name" => "Maxim Denisov",
-                "role" => "admin",
-                "token" => "***fakeAccessToken***"
-            );
-            $_SESSION['user'] = $user;
+        if(!empty($_POST['email']) && !empty($_POST['password'])) {
+            // normally you would load credentials from a database.
+            // This is just an example and is certainly not secure
+            if($_POST['email'] == 'admin@test.com' && $_POST['password'] == 'admin') {
 
-            echo json_encode($user);
+                $user = array(
+                    "email" => "admin@test.com",
+                    "name" => "Maxim Denisov",
+                    "role" => "admin",
+                    "token" => "***fakeAccessToken***"
+                );
+                $_SESSION['user'] = $user;
 
+                echo json_encode($user);
+
+            } else {
+
+                echo '{"error":{"text":"You shall not pass..."}}';
+
+            }
         } else {
 
-            echo '{"error":{"text":"You shall not pass..."}}';
+            echo '{"error":{"text":"Username and Password are required."}}';
 
         }
-    } else {
-
-        echo '{"error":{"text":"Username and Password are required."}}';
 
     }
 

@@ -45,11 +45,14 @@ define([
             var email    = this.$('input[name="email"]').val();
             var password = this.$('input[name="password"]').val();
 
-            $.when(this.model.authenticate(email, password)).then(
+            $.when(this.model.login({
+					email: email,
+					password: password
+				})).then(
                 function (model, response, options){
-                    var token = model.get('token');
+//                    var token = model.get('token');
 
-                    console.log(model);
+                    console.log(arguments);
 
 //                    session.save(model);
 //                    session.load();
@@ -62,6 +65,24 @@ define([
                     self.$el.find('.alert').show();
                 }
             );
+
+//            $.when(this.model.authenticate(email, password)).then(
+//                function (model, response, options){
+//                    var token = model.get('token');
+//
+//                    console.log(model);
+//
+////                    session.save(model);
+////                    session.load();
+//
+////                    vent.trigger("app:logon");
+//
+////                    App.navigate("#/", {trigger: true});
+//                },
+//                function (model, xhr, options){
+//                    self.$el.find('.alert').show();
+//                }
+//            );
         },
 
 	};
