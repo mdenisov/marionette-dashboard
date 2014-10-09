@@ -15,9 +15,11 @@ define([
 
 		home: function() {
 
-			this.checkAuth();
+			if (!App.session.isAuthenticated()) {
+				App.navigate("#/login");
 
-			console.log('1234567');
+				return false;
+			}
 
             new Page({
 //                title: 'Главная',
@@ -27,7 +29,11 @@ define([
 
 		help: function() {
 
-			this.checkAuth();
+			if (!App.session.isAuthenticated()) {
+				App.navigate("#/login");
+
+				return false;
+			}
 
 			require(['hbs!templates/pages/help'], function(template) {
                 var view = BaseView.extend({
@@ -55,14 +61,6 @@ define([
                     }
 				});
 			});
-		},
-
-		checkAuth: function() {
-			if(!App.session.isAuthenticated()) {
-				App.navigate("#/login");
-
-				return false;
-			}
 		}
 
 	};

@@ -14,6 +14,19 @@ define([
 	var User = {
 
 		user: function() {
+
+			if (!App.session.isAuthenticated()) {
+				App.navigate("#/login");
+
+				return false;
+			}
+
+			if (!App.session.isAuthenticated()) {
+				App.navigate("#/login");
+
+				return false;
+			}
+
             new Page({
                 title: 'Профиль',
                 template: 'templates/pages/home'
@@ -21,6 +34,13 @@ define([
 		},
 
 		settings: function() {
+
+			if (!App.session.isAuthenticated()) {
+				App.navigate("#/login");
+
+				return false;
+			}
+
 			require(['hbs!templates/pages/help'], function(template) {
                 var view = BaseView.extend({
                     template: template,
