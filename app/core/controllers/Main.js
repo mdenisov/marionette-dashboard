@@ -14,6 +14,11 @@ define([
 	var Main = {
 
 		home: function() {
+
+			this.checkAuth();
+
+			console.log('1234567');
+
             new Page({
 //                title: 'Главная',
                 template: 'templates/pages/home'
@@ -21,6 +26,9 @@ define([
 		},
 
 		help: function() {
+
+			this.checkAuth();
+
 			require(['hbs!templates/pages/help'], function(template) {
                 var view = BaseView.extend({
                     template: template,
@@ -47,6 +55,14 @@ define([
                     }
 				});
 			});
+		},
+
+		checkAuth: function() {
+			if(!App.session.isAuthenticated()) {
+				App.navigate("#/login");
+
+				return false;
+			}
 		}
 
 	};
