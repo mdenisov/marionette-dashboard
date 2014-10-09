@@ -11,11 +11,10 @@ require(["config"], function() {
 		"core/modules",
 		"modules",
 
-		'core/routers/Auth',
 		'core/routers/Main',
 		'core/routers/User'
 
-	], function ($, _, Backbone, lodash, App, coreModules, userModules, AuthRouter, MainRouter, UserRouter) {
+	], function ($, _, Backbone, lodash, App, coreModules, userModules, MainRouter, UserRouter) {
 
 		'use strict';
 
@@ -61,7 +60,6 @@ require(["config"], function() {
 			initApplication: function() {
 				var options = {
 					routers: {
-						auth: AuthRouter,
 						main: MainRouter,
 						user: UserRouter
 					}

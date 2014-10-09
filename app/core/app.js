@@ -6,6 +6,7 @@ define(function(require, exports, module) {
 		$ = require("jquery"),
 		_ = require("underscore"),
 		cookie = require("cookie"),
+        user = require("core/models/User"),
 		session = require("core/session"),
 		Backbone = require("backbone"),
 		Marionette = require("marionette"),
@@ -23,6 +24,7 @@ define(function(require, exports, module) {
 	// The root path to run the application through.
 	app.root = "/";
 	app.layout;
+	app.user = user;
 	app.session = session;
 
 	// Main Region
@@ -50,6 +52,7 @@ define(function(require, exports, module) {
 
 
 	app.addInitializer(function(options) {
+        this.restoreUser();
 		this.initAppLayout();
 
 		// init ALL app routers
@@ -60,7 +63,7 @@ define(function(require, exports, module) {
 
 	app.on("initialize:before", function(options) {
 		options || (options = {});
-		app.i18n = {
+        this.i18n = {
 			acceptedLanguages: options.acceptedLanguages || [],
 			currentLanguage: "ru"
 		};
@@ -77,66 +80,76 @@ define(function(require, exports, module) {
 	});
 
     app.on("app:user:logon", function(options) {
-        app.initAppLayout();
+        this.initAppLayout();
     });
 
     app.on("app:user:logout", function(options) {
-        app.initAppLayout();
+        this.initAppLayout();
     });
 
 	app.on("session:expired", function(options) {
-		var currentRoute = app.getCurrentRoute();
+		var currentRoute = this.getCurrentRoute();
 
-		app.setCookie('route', currentRoute);
+        this.setCookie('route', currentRoute);
 	});
 
 	app.on('app:page:show', function(view) {
-		app.regionMain.currentView.content.close();
-		app.regionMain.currentView.content.show(view);
+        this.regionMain.currentView.content.close();
+        this.regionMain.currentView.content.show(view);
 	});
 
 	app.on('app:layout:show', function() {
 
-        if (app.session.isAuthenticated()) {
-		    app.initBreadcrumb();
+        if (this.session.isAuthenticated()) {
+            this.initBreadcrumb();
         }
 
 	});
 
     app.on('app:page:action', function(event) {
         try {
-            app.regionMain.currentView.content.currentView.content.currentView.trigger('app:page:action', event);
+            this.regionMain.currentView.content.currentView.content.currentView.trigger('app:page:action', event);
         } catch (error) {
 
         }
     });
 
 
+    app.restoreUser = function() {
+        if (this.session.get('accessToken')) {
+            this.user.set({
+                id: app.session.get('userId'),
+                email: app.session.get('email'),
+                name: app.session.get('userName'),
+                photo: app.session.get('userPhoto'),
+                token: app.session.get('accessToken')
+            });
+        }
+    };
+
 	app.initAppLayout = function() {
 		var Layout;
 
-        app.session.load();
-
-		if (app.session.isAuthenticated()) {
+		if (this.session.isAuthenticated()) {
 			Layout = require("core/layout/Main");
 		} else {
 			Layout = require("core/layout/Empty");
 		}
 
-		app.layout = new Layout({model: app.session});
+        this.layout = new Layout({model: app.user});
 
 		// Inject the main layout into the #main region of the page.
-		app.regionMain.close();
-		app.regionMain.show(app.layout);
+        this.regionMain.close();
+        this.regionMain.show(this.layout);
 
-		app.trigger('app:layout:show');
+        this.trigger('app:layout:show');
 	};
 
 	app.initBreadcrumb = function() {
-		app.breadcrumb = Breadcrumb;
-		app.breadcrumb.reset();
+        this.breadcrumb = Breadcrumb;
+        this.breadcrumb.reset();
 
-		app.regionMain.currentView.breadcrumb.show(app.breadcrumb);
+        this.regionMain.currentView.breadcrumb.show(app.breadcrumb);
 	};
 
 	app.module = function(additionalProps) {

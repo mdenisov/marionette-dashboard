@@ -36,6 +36,7 @@ define([
             $.cookie('userId', model.get('id'));
             $.cookie('userName', model.get('name'));
             $.cookie('userPhoto', model.get('photo'));
+            $.cookie('userRole', model.get('role'));
         },
 
         // Loads the user's credentials from the cookie data.
@@ -45,6 +46,7 @@ define([
             this.set('userId', $.cookie('userId'));
             this.set('userName', $.cookie('userName'));
             this.set('userPhoto', $.cookie('userPhoto'));
+            this.set('userRole', $.cookie('userRole'));
 
             //set the Authorization header
             Backbone.BasicAuth.set($.cookie('accessToken'));

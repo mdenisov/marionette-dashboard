@@ -7,7 +7,7 @@ define([
 ], function (Backbone, App) {
     "use strict";
 
-    return Backbone.Model.extend({
+    var User =  Backbone.Model.extend({
 
 		url: function() {
 			return App.config.api + '/index.php';
@@ -83,5 +83,7 @@ define([
 		}
 
     });
+
+    return new User();
 
 });
