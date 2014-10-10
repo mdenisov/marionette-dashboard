@@ -1,10 +1,26 @@
 <?php
 
+    session_cache_limiter(false);
+    session_start();
+
     require 'Slim/Slim.php';
     \Slim\Slim::registerAutoloader();
     $app = new \Slim\Slim();
 
-    $app->get('/login/:login/:password', 'authenticate');
+    $app->add(new \Slim\Middleware\SessionCookie(array(
+//        'expires' => '1 hour',
+        'expires' => '1 minute',
+        'path' => '/',
+        'domain' => null,
+        'secure' => false,
+        'httponly' => false,
+        'secret' => 'dashboard',
+        'cipher' => MCRYPT_RIJNDAEL_256,
+        'cipher_mode' => MCRYPT_MODE_CBC
+    )));
+
+    $app->get('/login/:login/:password', 'login');
+    $app->get('/logout', 'logout');
     $app->get('/users', 'getUsers');
     $app->get('/users/:id', 'getUser');
     $app->post('/users', 'addUser');
@@ -23,8 +39,9 @@
         return $dbh;
     }
 
-    function authenticate ($email, $password) {
+    function login ($email, $password) {
         if ($email && $password) {
+            $app = \Slim\Slim::getInstance();
             $sql = "select * FROM users WHERE email=:email AND password=:password";
             try {
                 $db = getConnection();
@@ -34,13 +51,31 @@
                 $stmt->execute();
                 $user = $stmt->fetchObject();
                 $db = null;
-                echo json_encode(array("user" => $user));
+
+//                $app->setEncryptedCookie('accessToken', md5($email));
+//                $_SESSION['accessToken'] = md5($email);
+                $app->setCookie('accessToken', md5($email));
+
+                if ($user) {
+                    echo json_encode(array("user" => $user));
+                } else {
+                    echo '{"error":{"text": login or password is incorrect}}';
+                }
             } catch(PDOException $e) {
                 echo '{"error":{"text":'. $e->getMessage() .'}}';
             }
         } else {
             echo '{"error":{"text": login and password required}}';
         }
+    }
+
+    function logout () {
+        $app = \Slim\Slim::getInstance();
+        $app->deleteCookie('accessToken');
+        session_destroy();
+        session_unset();
+
+        echo '{}';
     }
 
     function getUsers() {

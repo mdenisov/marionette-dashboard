@@ -6,8 +6,6 @@ define(function(require, exports, module) {
 		$ = require("jquery"),
 		_ = require("underscore"),
 		cookie = require("cookie"),
-        user = require("core/models/User"),
-		session = require("core/session"),
 		Backbone = require("backbone"),
 		Marionette = require("marionette"),
 		bootstrap = require("bootstrap"),
@@ -17,15 +15,16 @@ define(function(require, exports, module) {
 
 	// application configuration
 	app.config = {
-		api: 'api',
+		api: 'api/index.php',
 		cookie: 'dashboard_'
 	};
 
 	// The root path to run the application through.
 	app.root = "/";
-	app.layout;
-	app.user = user;
-	app.session = session;
+	app.layout = null;
+	app.user = null;
+	app.session = null;
+    app.DEBUG = true;
 
 	// Main Region
 	app.addRegions({

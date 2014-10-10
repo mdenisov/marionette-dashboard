@@ -45,10 +45,15 @@ define([
 
         logout: function() {
 
-            App.session.destroy();
+            App.user.logout({}, {
+                success: function(res) {
+//                    App.session.destroy();
+                    App.trigger('app:user:logout');
+                    App.navigate('#/login');
+                }, error: function(res) {
 
-            App.trigger('app:user:logout');
-            App.navigate("#/login");
+                }
+            });
 
         },
 
@@ -56,7 +61,7 @@ define([
             var email    = this.$('input[name="email"]').val();
             var password = this.$('input[name="password"]').val();
 
-            this.model.login({
+            App.user.login({
                 email: email,
                 password: password
             }, {

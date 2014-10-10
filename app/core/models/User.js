@@ -10,7 +10,7 @@ define([
     var User =  Backbone.Model.extend({
 
 		url: function() {
-			return App.config.api + '/index.php';
+			return App.config.api ;
 		},
 
         defaults: {
@@ -21,27 +21,55 @@ define([
             photo: ''
         },
 
+        authenticate: function (email, password) {
+            var dfd = new $.Deferred();
+
+            this.set({
+                email : email
+            },{
+                silent: true
+            });
+
+            this.fetch({
+                beforeSend: function (xhr) {
+
+                },
+                success: function(model, response, options) {
+                    dfd.resolve(model, response, options);
+                },
+                error: function(model, xhr, options) {
+                    dfd.reject(model, xhr, options);
+                }
+            });
+
+            return dfd.promise();
+        },
+
 		/*
 		 * Abstracted fxn to make a POST request to the auth endpoint
 		 * This takes care of the CSRF header for security, as well as
 		 * updating the user and session after receiving an API response
 		 */
-		postAuth: function(opts, callback, args){
+		postAuth: function(opts, callback, args) {
 			var self = this;
-			var postData = _.omit(opts, 'method');
+			var url = this.url() + '/' + opts.method;
+			var postData = _.values(_.omit(opts, 'method')).join('/');
+			var type = 'GET';
 
-			if(App.DEBUG) console.log(postData);
+            console.log(postData);
+
+			if(App.DEBUG) console.log(_.omit(opts, 'method'));
 
 			$.ajax({
-				url: this.url() + '?method=' + opts.method,
+				url: url + (postData ? '/' + postData : ''),
 				dataType: 'json',
-				type: 'POST',
+				type: type,
 				beforeSend: function(xhr) {
 					// Set the CSRF Token in the header for security
 //					var token = $('meta[name="csrf-token"]').attr('content');
 //					if (token) xhr.setRequestHeader('X-CSRF-Token', token);
 				},
-				data: _.omit(opts, 'method'),
+//				data: _.values(_.omit(opts, 'method')).join('/'),
 				success: function(res) {
 					if( !res.error ){
 						if(_.indexOf(['login', 'signup'], opts.method) !== -1){

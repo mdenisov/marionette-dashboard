@@ -8,13 +8,15 @@ require(["config"], function() {
 		'lodash',
 
 		"app",
+        "core/models/User",
+        "core/session",
 		"core/modules",
 		"modules",
 
 		'core/routers/Main',
 		'core/routers/User'
 
-	], function ($, _, Backbone, lodash, App, coreModules, userModules, MainRouter, UserRouter) {
+	], function ($, _, Backbone, lodash, App, User, Session, coreModules, userModules, MainRouter, UserRouter) {
 
 		'use strict';
 
@@ -24,6 +26,8 @@ require(["config"], function() {
 
 			initialize: function() {
 
+                App.user = User;
+                App.session = Session;
 				this.initModules();
 
 			},
