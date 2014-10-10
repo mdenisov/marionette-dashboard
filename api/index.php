@@ -4,7 +4,7 @@
     \Slim\Slim::registerAutoloader();
     $app = new \Slim\Slim();
 
-    $app->get('/login', 'authenticate');
+    $app->get('/login/:login/:password', 'authenticate');
     $app->get('/users', 'getUsers');
     $app->get('/users/:id', 'getUser');
     $app->post('/users', 'addUser');
@@ -23,20 +23,28 @@
         return $dbh;
     }
 
-    function authenticate () {
-        $user = array(
-            "id" => 1,
-            "email" => "admin@test.com",
-            "name" => "Maxim Denisov",
-            "photo" => "assets/img/avatar.jpg",
-            "role" => "admin",
-            "token" => "***fakeAccessToken***"
-        );
-        echo json_encode(array("user" => $user));
+    function authenticate ($email, $password) {
+        if ($email && $password) {
+            $sql = "select * FROM users WHERE email=:email AND password=:password";
+            try {
+                $db = getConnection();
+                $stmt = $db->prepare($sql);
+                $stmt->bindParam("email", $email);
+                $stmt->bindParam("password", $password);
+                $stmt->execute();
+                $user = $stmt->fetchObject();
+                $db = null;
+                echo json_encode(array("user" => $user));
+            } catch(PDOException $e) {
+                echo '{"error":{"text":'. $e->getMessage() .'}}';
+            }
+        } else {
+            echo '{"error":{"text": login and password required}}';
+        }
     }
 
     function getUsers() {
-        $sql = "select * FROM user ORDER BY id";
+        $sql = "select * FROM users ORDER BY id";
         try {
             $db = getConnection();
             $stmt = $db->query($sql);
@@ -49,7 +57,7 @@
     }
 
     function getUser($id) {
-        $sql = "SELECT * FROM user WHERE id=:id";
+        $sql = "SELECT * FROM users WHERE id=:id";
         try {
             $db = getConnection();
             $stmt = $db->prepare($sql);
@@ -66,7 +74,7 @@
     function addUser() {
         $request = \Slim\Slim::getInstance()->request();
         $user = json_decode($request->getBody());
-        $sql = "INSERT INTO user (email, rights) VALUES (:email, :rights)";
+        $sql = "INSERT INTO users (email, rights) VALUES (:email, :rights)";
         try {
             $db = getConnection();
             $stmt = $db->prepare($sql);
@@ -85,7 +93,7 @@
         $request = \Slim\Slim::getInstance()->request();
         $body = $request->getBody();
         $user = json_decode($body);
-        $sql = "UPDATE user SET email=:email, rights=:rights WHERE id=:id";
+        $sql = "UPDATE users SET email=:email, rights=:rights WHERE id=:id";
         try {
             $db = getConnection();
             $stmt = $db->prepare($sql);
@@ -101,7 +109,7 @@
     }
 
     function deleteUser($id) {
-        $sql = "DELETE FROM user WHERE id=:id";
+        $sql = "DELETE FROM users WHERE id=:id";
         try {
             $db = getConnection();
             $stmt = $db->prepare($sql);

@@ -2,3 +2,4 @@
 dist/*
 vendor/*
 node_modules/*
+logs/*
