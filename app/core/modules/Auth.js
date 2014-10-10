@@ -47,7 +47,7 @@ define([
 
             App.user.logout({}, {
                 success: function(res) {
-//                    App.session.destroy();
+                    App.session.destroy();
                     App.trigger('app:user:logout');
                     App.navigate('#/login');
                 }, error: function(res) {

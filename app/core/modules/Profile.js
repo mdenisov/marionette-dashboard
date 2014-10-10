@@ -15,7 +15,7 @@ define([
 		profile: function() {
 			new Page({
                 title: 'Профиль пользователя',
-				template: 'templates/pages/home'
+				template: 'templates/pages/profile'
 			});
 		}
 	};

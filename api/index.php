@@ -4,12 +4,17 @@
     session_start();
 
     require 'Slim/Slim.php';
+
     \Slim\Slim::registerAutoloader();
-    $app = new \Slim\Slim();
+
+    $app = new \Slim\Slim(array(
+        'cookies.lifetime' => '1 hour',
+        'cookies.path' => '/'
+    ));
 
     $app->add(new \Slim\Middleware\SessionCookie(array(
 //        'expires' => '1 hour',
-        'expires' => '1 minute',
+        'expires' => '1 hour',
         'path' => '/',
         'domain' => null,
         'secure' => false,
@@ -18,6 +23,8 @@
         'cipher' => MCRYPT_RIJNDAEL_256,
         'cipher_mode' => MCRYPT_MODE_CBC
     )));
+
+    $app->get('/test', 'test');
 
     $app->get('/login/:login/:password', 'login');
     $app->get('/logout', 'logout');
@@ -39,6 +46,10 @@
         return $dbh;
     }
 
+    function test () {
+        var_dump(session_id());
+    }
+
     function login ($email, $password) {
         if ($email && $password) {
             $app = \Slim\Slim::getInstance();
@@ -47,7 +58,7 @@
                 $db = getConnection();
                 $stmt = $db->prepare($sql);
                 $stmt->bindParam("email", $email);
-                $stmt->bindParam("password", $password);
+                $stmt->bindParam("password", md5(md5(trim($password))));
                 $stmt->execute();
                 $user = $stmt->fetchObject();
                 $db = null;
@@ -57,6 +68,7 @@
                 $app->setCookie('accessToken', md5($email));
 
                 if ($user) {
+                    unset($user->password);
                     echo json_encode(array("user" => $user));
                 } else {
                     echo '{"error":{"text": login or password is incorrect}}';

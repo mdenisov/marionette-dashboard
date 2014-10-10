@@ -6,9 +6,11 @@ define([
 
 	'app',
 	'core/views/Page',
-	'core/views/BaseView'
+	'core/views/BaseView',
 
-], function ($, _, Marionette, App, Page, BaseView) {
+    'hbs!templates/pages/profile'
+
+], function ($, _, Marionette, App, Page, BaseView, profile) {
 	'use strict';
 
 	var User = {
@@ -21,15 +23,29 @@ define([
 				return false;
 			}
 
-			if (!App.session.isAuthenticated()) {
-				App.navigate("#/login");
+            var view = BaseView.extend({
+                template: profile,
 
-				return false;
-			}
+                events: {
+                    'click h1': 'onHeaderClick'
+                },
+
+                onHeaderClick: function() {
+                    console.log('1234567');
+                },
+
+                onCollapse: function() {
+                    this.$el.toggle();
+                }
+            });
 
             new Page({
                 title: 'Профиль',
-                template: 'templates/pages/home'
+//                subtitle: 'Возможно, здесь вы найдете ответ на свой вопрос',
+                content: new view({model: App.user}),
+                tools: {
+                    collapse: true
+                }
             });
 		},
 
@@ -41,7 +57,7 @@ define([
 				return false;
 			}
 
-			require(['hbs!templates/pages/help'], function(template) {
+			require(['hbs!templates/pages/profile'], function(template) {
                 var view = BaseView.extend({
                     template: template,
 
