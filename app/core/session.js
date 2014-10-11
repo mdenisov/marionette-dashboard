@@ -9,9 +9,6 @@ define([
     'underscore',
     'backbone',
 
-    // Auth module
-    'core/auth',
-
     'cookie'
 
 ], function($, _, Backbone) {
@@ -47,9 +44,6 @@ define([
             this.set('userName', $.cookie('userName'));
             this.set('userPhoto', $.cookie('userPhoto'));
             this.set('userRole', $.cookie('userRole'));
-
-            //set the Authorization header
-            Backbone.BasicAuth.set($.cookie('accessToken'));
         },
 
         destroy: function() {

@@ -7,11 +7,7 @@ require 'Slim/Slim.php';
 
 \Slim\Slim::registerAutoloader();
 
-$app = new \Slim\Slim(array(
-    'expires' => '20 minutes',
-    'cookies.path' => '/',
-    'cookies.secret_key' => 'dashboard'
-));
+$app = new \Slim\Slim();
 
 $app->add(new \Slim\Middleware\SessionCookie(array(
     'expires' => '20 minutes',
