@@ -76,6 +76,10 @@ define(function(require, exports, module) {
 //				app.trigger("contacts:list");
 			}
 		}
+
+        $(document).ajaxError(function (e, xhr, options) {
+            console.log(e);
+        });
 	});
 
     app.on("app:user:logon", function(options) {
