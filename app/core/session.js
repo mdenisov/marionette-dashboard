@@ -54,7 +54,14 @@ define([
 
         destroy: function() {
             this.unset('accessToken');
-            return $.removeCookie('accessToken');
+            $.removeCookie('accessToken');
+//            $.removeCookie('email');
+            $.removeCookie('userId');
+            $.removeCookie('userName');
+            $.removeCookie('userPhoto');
+            $.removeCookie('userRole');
+
+            return true;
         }
 
     });
