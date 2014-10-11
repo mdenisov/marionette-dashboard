@@ -86,7 +86,7 @@ define([
     var module = App.module();
 
     module.initialize = function(options) {
-        console.log('Module:Auth => initialized');
+        if (App.DEBUG) console.log('Module:Auth => initialized');
 
         this.options = options;
 

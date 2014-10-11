@@ -9,7 +9,8 @@
 
     $app = new \Slim\Slim(array(
         'cookies.lifetime' => '1 hour',
-        'cookies.path' => '/'
+        'cookies.path' => '/',
+        'cookies.secret_key' => 'dashboard'
     ));
 
     $app->add(new \Slim\Middleware\SessionCookie(array(

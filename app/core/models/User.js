@@ -45,6 +45,18 @@ define([
             return dfd.promise();
         },
 
+        update: function(opts) {
+            var url = this.url() + '/user';
+            var data = {};
+            var postData = null;
+
+            _.each(opts, function(opt) {
+                _.extend(data, _.object([_.values(opt)]));
+            });
+
+            console.log(data);
+        },
+
 		/*
 		 * Abstracted fxn to make a POST request to the auth endpoint
 		 * This takes care of the CSRF header for security, as well as
@@ -101,6 +113,10 @@ define([
 		logout: function(opts, callback, args){
 			this.postAuth(_.extend(opts, { method: 'logout' }), callback);
 		},
+
+//        update: function(opts, callback, args){
+//            this.postAuth(_.extend(opts, { method: 'update' }), callback);
+//        },
 
 		signup: function(opts, callback, args){
 			this.postAuth(_.extend(opts, { method: 'signup' }), callback);

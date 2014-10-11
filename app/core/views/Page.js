@@ -7,9 +7,10 @@ define([
 
 	'app',
 	'hbs!templates/layout/page',
-    'hbs!templates/layout/tools'
+    'hbs!templates/layout/page-tools',
+    'hbs!templates/layout/page-footer'
 
-], function ($, _, Marionette, Handlebars, App, template, tools) {
+], function ($, _, Marionette, Handlebars, App, template, tools, footer) {
 	'use strict';
 
     var Layout = Marionette.Layout.extend({
@@ -18,7 +19,8 @@ define([
         regions: {
             header: '#page-header',
             tools: '#page-tools',
-            content: '#page-content'
+            content: '#page-content',
+            footer: '#page-footer'
         }
     });
 
@@ -48,6 +50,28 @@ define([
 
         events: {
             'click .panel-tools .btn': 'onToolItemClick'
+        },
+
+        serializeData: function() {
+            return this.options;
+        },
+
+        onToolItemClick: function(event) {
+            App.trigger('app:page:action', event);
+
+            return false;
+        }
+    });
+
+    var Footer = Marionette.ItemView.extend({
+        template: footer,
+
+        ui: {
+            tool: '.panel-footer .btn'
+        },
+
+        events: {
+            'click .panel-footer .btn': 'onToolItemClick'
         },
 
         serializeData: function() {
@@ -96,6 +120,9 @@ define([
 			if (options.tools) {
 				this.set('tools', options.tools);
 			}
+            if (options.footer) {
+                this.set('footer', options.footer);
+            }
 			if (options.template) {
 				this.unset('template');
 				this.template = options.template;
@@ -113,6 +140,7 @@ define([
             this.setHeader();
             this.setTools();
             this.setContent();
+            this.setFooter();
             this.setBreadcrumb();
         },
 
@@ -127,6 +155,13 @@ define([
             if (this.has('tools')) {
                 this.views.tools = new Tools(this.toJSON());
                 this.layout.tools.show(this.views.tools);
+            }
+        },
+
+        setFooter: function() {
+            if (this.has('footer')) {
+                this.views.footer = new Footer(this.toJSON());
+                this.layout.footer.show(this.views.footer);
             }
         },
 

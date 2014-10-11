@@ -8,8 +8,8 @@ define(function (require) {
 
             }
         },
-		'profile': {
-			'module': require('core/modules/Profile'),
+		'user': {
+			'module': require('core/modules/User'),
 			'options': {
 
 			}

@@ -121,6 +121,7 @@ define(function(require, exports, module) {
                 email: app.session.get('email'),
                 name: app.session.get('userName'),
                 photo: app.session.get('userPhoto'),
+                role: app.session.get('userRole'),
                 token: app.session.get('accessToken')
             });
         }

@@ -14,10 +14,10 @@ define([
         target: null,
 
         onRender: function() {
-            this.on('app:page:action', this.onToolsItemClick.bind(this));
+            this.on('app:page:action', this.onActionItemClick.bind(this));
         },
 
-        onToolsItemClick: function(event) {
+        onActionItemClick: function(event) {
             this.target = $(event.currentTarget);
 
             switch (this.target.data('target')) {
@@ -35,6 +35,13 @@ define([
                     break;
                 case 'edit':
                     this.onEdit();
+                    break;
+
+                case 'submit':
+                    this.onSave();
+                    break;
+                case 'reset':
+                    this.onReset();
                     break;
             }
         },
@@ -60,6 +67,14 @@ define([
         },
 
         onTrash: function() {
+
+        },
+
+        onSave: function() {
+
+        },
+
+        onReset: function() {
 
         }
 
