@@ -8,19 +8,19 @@
     \Slim\Slim::registerAutoloader();
 
     $app = new \Slim\Slim(array(
-        'cookies.lifetime' => '1 hour',
+        'expires' => '20 minutes',
         'cookies.path' => '/',
         'cookies.secret_key' => 'dashboard'
     ));
 
     $app->add(new \Slim\Middleware\SessionCookie(array(
-//        'expires' => '1 hour',
-        'expires' => '1 hour',
+        'expires' => '20 minutes',
         'path' => '/',
         'domain' => null,
         'secure' => false,
         'httponly' => false,
         'secret' => 'dashboard',
+        'name' => 'accessToken',
         'cipher' => MCRYPT_RIJNDAEL_256,
         'cipher_mode' => MCRYPT_MODE_CBC
     )));

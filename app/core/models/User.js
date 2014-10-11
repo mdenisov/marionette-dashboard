@@ -47,11 +47,12 @@ define([
 
         update: function(opts) {
             var url = this.url() + '/user';
-            var data = {};
+            var data = this;
             var postData = null;
 
             _.each(opts, function(opt) {
-                _.extend(data, _.object([_.values(opt)]));
+//                _.extend(data, _.object([_.values(opt)]));
+                this.set(_.object([_.values(opt)]));
             });
 
             console.log(data);
