@@ -27,12 +27,12 @@
 
     $app->get('/test', 'test');
 
-    $app->get('/login/:login/:password', 'login');
-    $app->get('/logout', 'logout');
+    $app->get('/user/login/:login/:password', 'login');
+    $app->get('/user/logout', 'logout');
+    $app->get('/user/:id', 'getUser');
+    $app->put('/user/:id', 'updateUser');
     $app->get('/users', 'getUsers');
-    $app->get('/users/:id', 'getUser');
     $app->post('/users', 'addUser');
-    $app->put('/users/:id', 'updateUser');
     $app->delete('/users/:id',  'deleteUser');
 
     $app->run();
@@ -70,7 +70,7 @@
 
                 if ($user) {
                     unset($user->password);
-                    echo json_encode(array("user" => $user));
+                    echo json_encode($user);
                 } else {
                     echo '{"error":{"text": login or password is incorrect}}';
                 }
@@ -141,12 +141,12 @@
         $request = \Slim\Slim::getInstance()->request();
         $body = $request->getBody();
         $user = json_decode($body);
-        $sql = "UPDATE users SET email=:email, rights=:rights WHERE id=:id";
+        $sql = "UPDATE users SET name=:name WHERE id=:id";
         try {
             $db = getConnection();
             $stmt = $db->prepare($sql);
-            $stmt->bindParam("email", $user->email);
-            $stmt->bindParam("rights", $user->rights);
+            $stmt->bindParam("name", $user->name);
+//            $stmt->bindParam("rights", $user->rights);
             $stmt->bindParam("id", $id);
             $stmt->execute();
             $db = null;

@@ -31,7 +31,7 @@ define([
 
         // Saving will create the cookie data instead of syncing the model.
         save: function(model) {
-            $.cookie('accessToken', model.get('token'));
+//            $.cookie('accessToken', model.get('token'));
             $.cookie('email', model.get('email'));
             $.cookie('userId', model.get('id'));
             $.cookie('userName', model.get('name'));

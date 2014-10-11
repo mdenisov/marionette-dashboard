@@ -10,7 +10,7 @@ define([
     var User =  Backbone.Model.extend({
 
 		url: function() {
-			return App.config.api ;
+			return App.config.api + '/user/';
 		},
 
         defaults: {
@@ -21,41 +21,51 @@ define([
             photo: ''
         },
 
-        authenticate: function (email, password) {
-            var dfd = new $.Deferred();
-
-            this.set({
-                email : email
-            },{
-                silent: true
-            });
-
+        auth: function (opts, callback) {
+            var self = this;
             this.fetch({
-                beforeSend: function (xhr) {
-
+                url: this.url() + 'login/' + opts.email + '/' + opts.password,
+                wait:true,
+                success:function(model, response) {
+                    if( callback && 'success' in callback ) callback.success(model, response);
                 },
-                success: function(model, response, options) {
-                    dfd.resolve(model, response, options);
-                },
-                error: function(model, xhr, options) {
-                    dfd.reject(model, xhr, options);
+                error: function(model, error) {
+                    if( callback && 'error' in callback ) callback.success(model, error);
                 }
             });
-
-            return dfd.promise();
         },
 
-        update: function(opts) {
-            var url = this.url() + '/user';
-            var data = this;
-            var postData = null;
+        logout: function (opts, callback) {
+            var self = this;
+            this.fetch({
+                url: this.url() + 'logout',
+                wait:true,
+                success:function(model, response) {
+                    if( callback && 'success' in callback ) callback.success(model, response);
+                },
+                error: function(model, error) {
+                    if( callback && 'error' in callback ) callback.success(model, error);
+                }
+            });
+        },
+
+        update: function(opts, callback) {
+            var data = {};
 
             _.each(opts, function(opt) {
-//                _.extend(data, _.object([_.values(opt)]));
-                this.set(_.object([_.values(opt)]));
+                _.extend(data, _.object([_.values(opt)]));
             });
 
-            console.log(data);
+            this.save(data, {
+                url: this.url() + this.get('id'),
+                wait:true,
+                success:function(model, response) {
+                    if( callback && 'success' in callback ) callback.success(model, response);
+                },
+                error: function(model, error) {
+                    if( callback && 'error' in callback ) callback.success(model, error);
+                }
+            });
         },
 
 		/*
@@ -111,9 +121,9 @@ define([
 			this.postAuth(_.extend(opts, { method: 'login' }), callback);
 		},
 
-		logout: function(opts, callback, args){
-			this.postAuth(_.extend(opts, { method: 'logout' }), callback);
-		},
+//		logout: function(opts, callback, args){
+//			this.postAuth(_.extend(opts, { method: 'logout' }), callback);
+//		},
 
 //        update: function(opts, callback, args){
 //            this.postAuth(_.extend(opts, { method: 'update' }), callback);

@@ -40,36 +40,37 @@ define([
                 model: App.user
             });
 
-            view.on('app:login', Controller.authenticate);
+            view.on('app:login', Controller.auth);
         },
 
         logout: function() {
 
             App.user.logout({}, {
-                success: function(res) {
+                success: function(model, res) {
                     App.session.destroy();
                     App.trigger('app:user:logout');
                     App.navigate('#/login');
-                }, error: function(res) {
+                }, error: function(model, res) {
 
                 }
             });
 
         },
 
-        authenticate: function() {
+        auth: function() {
             var email    = this.$('input[name="email"]').val();
             var password = this.$('input[name="password"]').val();
 
-            App.user.login({
+            App.user.auth({
                 email: email,
                 password: password
             }, {
-                success: function(res) {
+                success: function(model, res) {
+                    App.session.save(model);
                     App.session.load();
                     App.trigger('app:user:logon');
                     App.navigate('#/');
-                }, error: function(res) {
+                }, error: function(model, res) {
 
                 }
             });
