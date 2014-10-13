@@ -9,8 +9,9 @@ $app->delete('/user/:id',  'deleteUser');
 $app->get('/user/list',  'getUsers');
 
 function login ($email, $password) {
+    $app = \Slim\Slim::getInstance();
+
     if ($email && $password) {
-        $app = \Slim\Slim::getInstance();
         $sql = "select * FROM users WHERE email=:email AND password=:password";
         try {
             $db = getConnection();
@@ -25,6 +26,7 @@ function login ($email, $password) {
                 unset($user->password);
                 echo json_encode($user);
             } else {
+//                $app->halt(401, 'login or password is incorrect');
                 echo '{"error":{"text": login or password is incorrect}}';
             }
         } catch(PDOException $e) {

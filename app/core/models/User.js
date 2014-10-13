@@ -30,7 +30,7 @@ define([
                     if( callback && 'success' in callback ) callback.success(model, response);
                 },
                 error: function(model, error) {
-                    if( callback && 'error' in callback ) callback.success(model, error);
+                    if( callback && 'error' in callback ) callback.error(model, error);
                 }
             });
         },
@@ -44,7 +44,7 @@ define([
                     if( callback && 'success' in callback ) callback.success(model, response);
                 },
                 error: function(model, error) {
-                    if( callback && 'error' in callback ) callback.success(model, error);
+                    if( callback && 'error' in callback ) callback.error(model, error);
                 }
             });
         },
@@ -64,7 +64,7 @@ define([
                     if( callback && 'success' in callback ) callback.success(model, response);
                 },
                 error: function(model, error) {
-                    if( callback && 'error' in callback ) callback.success(model, error);
+                    if( callback && 'error' in callback ) callback.error(model, error);
                 }
             });
         },
@@ -78,7 +78,7 @@ define([
                     if( callback && 'success' in callback ) callback.success(model, response);
                 },
                 error: function(model, error) {
-                    if( callback && 'error' in callback ) callback.success(model, error);
+                    if( callback && 'error' in callback ) callback.error(model, error);
                 }
             });
         }

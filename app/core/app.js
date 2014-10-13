@@ -78,7 +78,7 @@ define(function(require, exports, module) {
 		}
 
         $(document).ajaxError(function (e, xhr, options) {
-            console.log(e);
+            console.log(xhr.responseText);
         });
 	});
 
