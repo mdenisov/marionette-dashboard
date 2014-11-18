@@ -13,7 +13,7 @@
 
             <div class="avatar-block__detail">
                 <p>{{name}}</p>
-                <p><a href="#/user">Профиль</a></p>
+                <p><a href="#/user">{{$ "profile"}}</a></p>
             </div>
 
             <div class="avatar-block__links btn-group btn-group-justified">
@@ -34,7 +34,7 @@
                 <li class="navigation__item navigation__item--active">
                     <a class="navigation__link" role="nav-main" href="#/">
                         <i class="fa fa-th navigation__link__icon"></i>
-                        <span class="navigation__link__title">Typography</span>
+                        <span class="navigation__link__title">{{$ "typography"}}</span>
                         <span class="navigation__link__expand"></span>
                     </a>
                 </li>
@@ -61,16 +61,16 @@
             </ul>
             <ul class="nav navbar-nav navbar-right tooltip-area">
                 <li><a href="#menu-right" data-toggle="tooltip" title="" data-container="body" data-placement="left" data-original-title="Right Menu"><i class="fa fa-align-right"></i></a></li>
-                <li class="hidden-xs hidden-sm"><a href="#/help" class="h-seperate">Помощь</a></li>
+                <li class="hidden-xs hidden-sm"><a href="#/help" class="h-seperate">{{$ "help"}}</a></li>
                 <li class="dropdown">
                     <a href="#" class="dropdown-toggle" data-toggle="dropdown" data-hover="dropdown">
                         <em><strong>Hi</strong>, {{name}} </em> <i class="dropdown-icon fa fa-angle-down"></i>
                     </a>
                     <ul class="dropdown-menu pull-right icon-right arrow">
-                        <li><a href="#/user"><i class="fa fa-user"></i> Профиль</a></li>
-                        <li><a href="#/user/settings"><i class="fa fa-cog"></i> Настройки </a></li>
+                        <li><a href="#/user"><i class="fa fa-user"></i> {{$ "profile"}}</a></li>
+                        <li><a href="#/user/settings"><i class="fa fa-cog"></i> {{$ "settings"}} </a></li>
                         <li class="divider"></li>
-                        <li><a href="#/logout"><i class="fa fa-sign-out"></i> Выход </a></li>
+                        <li><a href="#/logout"><i class="fa fa-sign-out"></i> {{$ "logout"}} </a></li>
                     </ul>
                 </li>
             </ul>
