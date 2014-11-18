@@ -8,8 +8,10 @@ define(function(require, exports, module) {
 		cookie = require("cookie"),
 		Backbone = require("backbone"),
 		Marionette = require("marionette"),
+		BossView = require("marionette.BossView"),
 		bootstrap = require("bootstrap"),
-		Breadcrumb = require("core/views/Breadcrumb");
+		Breadcrumb = require("core/views/Breadcrumb"),
+		Notification = require("core/utils/Notification");
 
 	app = new Marionette.Application();
 
@@ -90,6 +92,10 @@ define(function(require, exports, module) {
         this.initAppLayout();
     });
 
+	app.on('app:user:notify', function(options) {
+		this.userNotify(options);
+	});
+
 	app.on("session:expired", function(options) {
 		var currentRoute = this.getCurrentRoute();
 
@@ -105,6 +111,7 @@ define(function(require, exports, module) {
 
         if (this.session.isAuthenticated()) {
             this.initBreadcrumb();
+            this.initNotifyCenter();
         }
 
 	});
@@ -116,7 +123,6 @@ define(function(require, exports, module) {
 
         }
     });
-
 
     app.restoreUser = function() {
         if (this.session.get('accessToken')) {
@@ -154,6 +160,17 @@ define(function(require, exports, module) {
         this.breadcrumb.reset();
 
         this.regionMain.currentView.breadcrumb.show(app.breadcrumb);
+	};
+
+	app.initNotifyCenter = function() {
+		this.notification = Notification;
+		this.notification.reset();
+
+		this.regionMain.currentView.notification.show(app.notification);
+	};
+
+	app.userNotify = function(object) {
+		Notification.addOne(object);
 	};
 
 	app.module = function(additionalProps) {

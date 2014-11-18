@@ -39,7 +39,14 @@ define([
                 },
 
                 onSave: function() {
-                    this.model.update(this.ui.form.serializeArray());
+                    this.model.update(this.ui.form.serializeArray(), {
+						success: function() {
+							App.trigger('app:user:notify', {message: "This alert needs your attention, but it's not super important.", type: "success"});
+						},
+						error: function() {
+							App.trigger('app:user:notify', {message: "This alert needs your attention, but it's not super important.", type: "danger"});
+						}
+					});
                 },
 
                 onReset: function() {

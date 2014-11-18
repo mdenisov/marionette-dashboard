@@ -5,9 +5,11 @@
 
         <div id="avatar-block" class="avatar-block">
 
+            {{#if photo}}
             <span class="avatar-block__image">
                 <img alt="" src="{{photo}}" class="circle">
             </span>
+            {{/if}}
 
             <div class="avatar-block__detail">
                 <p>{{name}}</p>
@@ -87,5 +89,7 @@
         <div id="content" class="content"></div>
 
     </section>
+
+    <section id="notification-center"></section>
 
 </section>

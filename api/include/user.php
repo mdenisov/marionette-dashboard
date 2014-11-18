@@ -8,6 +8,8 @@ $app->post('/user', 'addUser');
 $app->delete('/user/:id',  'deleteUser');
 $app->get('/user/list',  'getUsers');
 
+//echo md5(md5(trim('test')));
+
 function login ($email, $password) {
     $app = \Slim\Slim::getInstance();
 

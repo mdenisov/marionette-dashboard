@@ -13,6 +13,18 @@ define([
 ], function ($, _, Marionette, Handlebars, App, template, tools, footer) {
 	'use strict';
 
+//	var PageView = Marionette.BossView.extend({
+//		subViews: {
+////			someSubView: SubView
+//		},
+//		subViewEvents: {
+////			'someSubView some:event': 'onSomeEvent'
+//		},
+//		onSomeEvent: function() {
+//			//do something
+//		}
+//	});
+
     var Layout = Marionette.Layout.extend({
         template: template,
 

@@ -18,7 +18,8 @@ define([
 			user:           '#avatar-block',
 			header:         '#header',
 			content:        '#content',
-			navigation:     '#navigation'
+			navigation:     '#navigation',
+			notification:     '#notification-center'
 		}
 	});
 });

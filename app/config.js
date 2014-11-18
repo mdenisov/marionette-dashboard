@@ -20,6 +20,7 @@ require.config({
         "handlebars":			"../vendor/hbs/handlebars",
 
         // Plugins
+        "marionette.BossView":  "../vendor/Marionette.BossView.AMD",
         "backbone.validation":  "../vendor/backbone.validation/dist/backbone-validation-amd",
         "text":					"../vendor/requirejs-text/text",
 		"cookie":     			"../vendor/jquery-cookie/jquery.cookie",
