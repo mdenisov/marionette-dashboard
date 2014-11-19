@@ -1,0 +1,514 @@
+// Main Styles
+::selection {
+	background-color: #0aa699;
+	color: white;
+}
+
+html {
+	min-width: 320px;
+	overflow-x: hidden;
+	overflow-y: hidden;
+}
+
+body {
+	background: #1C1D1F;
+	color: #6f7b8a;
+	font-family: "Ubuntu";
+	font-weight: 300;
+	min-width: 320px;
+	-webkit-font-smoothing: antialiased;
+
+	&.full-lg {
+		.full-lg,
+		.main {
+			margin: 0;
+			padding: 0;
+		}
+	}
+
+}
+
+&::-webkit-scrollbar {
+	background: #f2f0eb;
+	width: 5px;
+}
+&::-webkit-scrollbar-thumb {
+	background: #cdcdcd;
+}
+
+
+.wrapper {
+	background: #20242b;
+	height: 100%;
+	left: 0;
+	min-width: 320px;
+	overflow: hidden;
+	position: absolute;
+	right: 0;
+}
+
+
+// --- SIGNIN ---
+.form-signin {
+	max-width: 330px;
+	margin: 100px auto;
+	background: #fff;
+	border-radius: 5px;
+
+	&__heading {
+		margin: 0;
+		padding: 35px 15px;
+		text-align: center;
+		background: #aec785;
+		border-radius: 5px 5px 0 0;
+		color: #fff;
+		font-size: 18px;
+		text-transform: uppercase;
+		font-weight: 300;
+		font-family: 'Open Sans', sans-serif;
+		border-bottom: 10px solid #a0b87e;
+	}
+	&__wrap {
+		padding: 20px;
+		position: relative;
+	}
+	&__user-info {
+		background: #eaeaec;
+		margin: -20px -20px 20px -20px;
+		padding: 20px;
+	}
+
+	input[type="text"], input[type="password"] {
+		margin-bottom: 15px;
+		border-radius: 5px;
+		border: 1px solid #eaeaea;
+		box-shadow: none;
+		font-size: 12px;
+		height: auto;
+		padding: 10px;
+	}
+	.form-control:last-child {
+		margin-bottom: 0 !important;
+	}
+	.checkbox {
+		margin-bottom: 14px;
+		color: #b6b6b6;
+		font-weight: 300;
+		font-family: 'Open Sans', sans-serif;
+	}
+	.btn-login {
+		background: #1fb5ac;
+		color: #fff;
+		text-transform: uppercase;
+		font-weight: 300;
+		font-family: 'Open Sans', sans-serif;
+		margin: 20px 0 5px;
+
+		&:hover {
+			background: darken(#1fb5ac, 5%);
+		}
+	}
+}
+
+
+
+
+
+
+
+// --- MAIN ---
+.header {
+	background: white;
+	border-bottom: 5px #0aa699 solid;
+	height: 55px;
+	//	margin-left: 250px;
+	left: 0;
+	position: absolute;
+	right: 0;
+	top: 0;
+	z-index: 15;
+	padding-right: 15px;
+
+	.transition(transform 0.5s);
+
+	&__logo {
+		background-color: #262a33;
+		border-bottom: 5px #191c21 solid;
+		float: left;
+		height: 55px;
+		position: relative;
+		text-align: center;
+		width: 250px;
+		display: block;
+		z-index: 5;
+
+		.clearfix();
+
+		&__link {
+			//			background: url(../../assets/img/logo.png) no-repeat center center;
+			display: block;
+			height: 50px;
+			position: relative;
+		}
+	}
+
+	&__bar {
+		.clearfix();
+
+		ul {
+			li a {
+				color: #A1A1A1;
+				line-height: 50px;
+				padding: 0 15px;
+
+				.transition(all 0.25s);
+
+				&:hover {
+					color: #C1C1C1;
+				}
+			}
+		}
+	}
+
+	ul.dropdown-menu {
+		margin-top: 5px;
+		min-width: 200px;
+
+		li {
+			a {
+				line-height: 28px;
+			}
+		}
+	}
+
+	.dropdown a em {
+		font-style: normal !important;
+	}
+}
+
+.sidebar {
+	width: 250px;
+	height: 100%;
+	position: fixed;
+	background: #1b1e24;
+//	position: absolute;
+	padding-top: 55px;
+	z-index: 2;
+	overflow: auto;
+	overflow-x: hidden;
+	-webkit-overflow-scrolling: touch;
+
+	.transition(all 0.3s ease-in-out);
+}
+
+.avatar-block {
+	color: #FFF;
+	padding: 25px 0px 0;
+	position: relative;
+
+	&__image {
+		display: inline-block;
+		position: relative;
+		text-align: center;
+		height: 118px;
+		left: 50%;
+		margin-left: -59px;
+		width: 118px;
+
+		img {
+			left: 11px;
+			position: absolute;
+			top: 11px;
+			width: 96px;
+		}
+	}
+
+	&__detail {
+		margin: 5px auto 25px;
+		padding: 5px 15px;
+		text-align: center;
+
+		p {
+			overflow: hidden;
+			text-overflow: ellipsis;
+			white-space: nowrap;
+			margin-bottom: 5px;
+
+			&:first-child {
+				font-size: 24px;
+			}
+		}
+	}
+
+	&__links {
+		margin-bottom: 1px;
+
+		a {
+			color: #FFF;
+			font-size: 16px;
+			line-height: 35px;
+			position: relative !important;
+
+			i {
+				height: 20px;
+				text-align: center;
+				width: 20px;
+				z-index: 3;
+			}
+
+			em {
+				height: 14px;
+				margin-left: 5px;
+				margin-top: -4px;
+				position: absolute;
+				top: 50%;
+				width: 14px;
+
+				&.green {
+					&:after {
+						background-color: #A9D96C;
+					}
+				}
+
+				&:before {
+					background: transparent;
+					border: 3px solid #FFF;
+					content: "";
+					height: 24px;
+					left: -8px;
+					filter: alpha(opacity=0);
+					opacity: 0;
+					position: absolute;
+					top: -8px;
+					width: 24px;
+					border-radius: 50%;
+				}
+
+				&:after {
+					background-color: #FFCC33;
+					content: "";
+					height: 8px;
+					left: 0;
+					position: absolute;
+					width: 8px;
+					border-radius: 50%;
+				}
+
+				&.active {
+					&:before {
+						.animation(sonar 2s ease-out infinite);
+					}
+				}
+			}
+
+			&.btn {
+				border-radius: 0;
+				background: #372b32;
+				border-left: 1px rgba(0, 0, 0, 0.2) solid !important;
+
+				&:first-child {
+					border-left: 0 !important;
+				}
+
+				&:hover {
+					color: #ffffff;
+					background: #2e242a;
+				}
+			}
+		}
+	}
+}
+
+.navigation {
+
+	&__list {
+		list-style: none;
+		color: #FAFAFA;
+		margin: 0;
+		padding: 0;
+	}
+
+	&__item {
+		margin-bottom: 1px;
+		position: relative;
+		background: #202025;
+		padding: 0;
+		line-height: 15px;
+		border-bottom: 1px solid rgba(255,255,255,0.05);
+
+		&--active {
+			background-color: lighten(#23272e, 2%);
+
+			.navigation__link {
+				color: #1fb5ad;
+				display: block;
+				background: #23272e;
+
+				&:hover {
+					color: #1fb5ad;
+				}
+			}
+		}
+	}
+
+	&__link {
+		color: #aeb2b7;
+		text-decoration: none;
+		display: block;
+		padding: 18px 0 18px 25px;
+		font-size: 12px;
+		outline: none;
+		text-overflow: ellipsis;
+		white-space: nowrap;
+		overflow: hidden;
+
+		.transition(all 0.3s);
+
+		&:hover {
+			color: #ffffff;
+		}
+
+		&__icon {
+			font-size: 15px;
+			padding-right: 6px;
+		}
+
+		&__title {
+			display: inline-block;
+		}
+
+		&__expand {
+			height: 17px;
+			width: 17px;
+			display: inline-block;
+			background: url(../../assets/img/nav-expand.png) no-repeat top;
+			border-radius: 3px;
+			position: absolute;
+			right: 10px;
+		}
+	}
+}
+
+.breadcrumb-nav {
+	width: 100%;
+	margin-left: 250px;
+	margin-top: 55px;
+	position: absolute;
+	z-index: 10;
+}
+
+.page {
+	background: #e5e9ec;
+	//	height: 100%;
+	top: 93px;
+	left: 0;
+	margin-left: 250px;
+	overflow: auto;
+	overflow-x: hidden;
+	padding-top: 15px;
+	position: absolute;
+	right: 0;
+	bottom: 0;
+	z-index: 9;
+	-webkit-overflow-scrolling: touch;
+
+	@transition: 'transform 0.5s, padding-top 0.5s';
+	.transition(@transition);
+
+	&__flip {
+		border-bottom-color: #e5e9ec;
+		border-right: 23px solid transparent;
+		border-top: 23px solid #FFF;
+		border-top-color: #CCC;
+		bottom: 0;
+		position: absolute;
+		right: 0;
+		z-index: 3;
+
+		&:before {
+			border-bottom: 28px solid;
+			border-bottom-color: inherit;
+			border-left: 28px solid transparent;
+			bottom: -2px;
+			content: "";
+			position: absolute;
+			right: -25px;
+		}
+
+		&:after {
+			border-bottom: 23px solid rgba(0, 0, 0, 0.1);
+			border-left: 23px solid transparent;
+			content: "";
+			position: absolute;
+			right: 0;
+			top: -23px;
+		}
+	}
+}
+
+.content {
+	padding: 15px 30px 0;
+}
+
+.panel-heading h2 {
+	font-family: "Ubuntu";
+	font-weight: 300;
+	font-size: 3.5em;
+	line-height: 55px;
+	text-transform: capitalize;
+}
+
+.panel-tools {
+	ul {
+		.list-unstyled();
+
+		li {
+			border: 0;
+			padding: 0;
+			display: table-cell;
+			text-align: left;
+
+			&:last-child {
+				border-width: 0 1px;
+			}
+
+			.btn {
+				width: 35px;
+				height: 36px;
+				border-collapse: separate;
+				border-bottom: 0;
+				border-top: 0;
+				border: 0;
+				line-height: 33px;
+				margin: 0;
+				text-align: center;
+				padding: 0;
+				border-radius: 0;
+				color: #6f7b8a;
+
+				&:hover {
+					color: darken(#6f7b8a, 10%);
+				}
+			}
+		}
+	}
+}
+
+label {
+	&.color, &.version, span.color {
+		background-color: #f1f3f5;
+		font-weight: 400;
+		text-align: left;
+		line-height: 25px;
+		height: 25px;
+		font-size: 11px;
+		max-width: 100%;
+		white-space: nowrap;
+		overflow: hidden;
+		text-overflow: ellipsis;
+		padding: 0 15px;
+		border-radius: 2px;
+		margin-bottom: 10px;
+		margin-top: 5px;
+	}
+}
