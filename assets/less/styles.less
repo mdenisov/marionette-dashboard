@@ -1,4 +1,9 @@
 // Main Styles
+a:hover {
+	color: @link-hover-color;
+	text-decoration: none;
+}
+
 ::selection {
 	background-color: #0aa699;
 	color: white;
@@ -78,17 +83,18 @@ body {
 		padding: 20px;
 	}
 
-	input[type="text"], input[type="password"] {
+	.form-control {
 		margin-bottom: 15px;
 		border-radius: 5px;
-		border: 1px solid #eaeaea;
+//		border-color: #eaeaea;
 		box-shadow: none;
 		font-size: 12px;
 		height: auto;
 		padding: 10px;
-	}
-	.form-control:last-child {
-		margin-bottom: 0 !important;
+
+		&:last-child {
+			margin-bottom: 0 !important;
+		}
 	}
 	.checkbox {
 		margin-bottom: 14px;
@@ -456,6 +462,10 @@ body {
 	font-size: 3.5em;
 	line-height: 55px;
 	text-transform: capitalize;
+}
+
+.panel-shadow {
+	box-shadow: 0 1px 1px rgba(0, 0, 0, 0.05);
 }
 
 .panel-tools {

@@ -5869,7 +5869,7 @@ hr {
   margin-top: 20px;
   margin-bottom: 20px;
   border: 0;
-  border-top: 1px solid #dddddd;
+  border-top: 1px solid #eeeeee;
 }
 .sr-only {
   position: absolute;
@@ -6122,7 +6122,7 @@ a.bg-danger:hover {
 .page-header {
   padding-bottom: 9px;
   margin: 40px 0 20px;
-  border-bottom: 1px solid #dddddd;
+  border-bottom: 1px solid #eeeeee;
 }
 ul,
 ol {
@@ -6190,7 +6190,7 @@ blockquote {
   padding: 10px 20px;
   margin: 0 0 20px;
   font-size: 17.5px;
-  border-left: 5px solid #dddddd;
+  border-left: 5px solid #eeeeee;
 }
 blockquote p:last-child,
 blockquote ul:last-child,
@@ -6214,7 +6214,7 @@ blockquote .small:before {
 blockquote.pull-right {
   padding-right: 15px;
   padding-left: 0;
-  border-right: 5px solid #dddddd;
+  border-right: 5px solid #eeeeee;
   border-left: 0;
   text-align: right;
 }
@@ -8535,7 +8535,7 @@ select[multiple].input-group-sm > .input-group-btn > .btn {
   border-radius: 2px 2px 0 0;
 }
 .nav-tabs > li > a:hover {
-  border-color: #dddddd #dddddd #dddddd;
+  border-color: #eeeeee #eeeeee #dddddd;
 }
 .nav-tabs > li.active > a,
 .nav-tabs > li.active > a:hover,
@@ -9750,7 +9750,7 @@ a.list-group-item:focus {
 .list-group-item.disabled,
 .list-group-item.disabled:hover,
 .list-group-item.disabled:focus {
-  background-color: #dddddd;
+  background-color: #eeeeee;
   color: #999999;
 }
 .list-group-item.disabled .list-group-item-heading,
@@ -11232,13 +11232,35 @@ label {
   font-family: "Arial", sans-serif;
   font-size: 12px;
 }
+table thead,
+.table-bordered thead {
+  background-color: #F9F8F5;
+}
+table thead > tr > th,
+.table-bordered thead > tr > th {
+  color: #898989;
+}
+.table thead > tr > th,
+.table tbody > tr > th,
+.table tfoot > tr > th,
+.table thead > tr > td,
+.table tbody > tr > td,
+.table tfoot > tr > td {
+  border-top: 1px solid #EDEDED;
+  padding: 12px 8px;
+}
 .form-control {
   box-shadow: none;
   transition: border-color ease-in-out 0.15s, box-shadow ease-in-out 0.15s;
 }
+.form-control:active,
 .form-control:focus {
   border-color: #6CC3A0;
   outline: 0;
+  box-shadow: none;
+}
+.has-error .form-control:active,
+.has-error .form-control:focus {
   box-shadow: none;
 }
 .breadcrumb {
@@ -11289,6 +11311,60 @@ label {
   border-color: #ededed;
   border-radius: 0px;
 }
+a[data-toggle="collapse"] {
+  display: block;
+  padding: 10px 5px;
+  color: #999;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  overflow: hidden;
+}
+a[data-toggle="collapse"] i {
+  width: 17px;
+  height: 17px;
+  text-align: center;
+  line-height: 17px;
+  margin-right: 3px;
+}
+a[data-toggle="collapse"] i.collapse-caret {
+  float: right;
+  margin-top: 3px;
+}
+.panel-group .panel-heading + .panel-collapse .panel-body {
+  border-top: 1px solid #EDEDED;
+}
+.nav-tabs {
+  border-bottom: 1px solid #FFF;
+  background-color: #d9dfe3;
+  padding: 10px 12px 0 5px;
+}
+.nav-tabs > li > a {
+  margin-right: 0px;
+  margin-left: 5px;
+  background-color: rgba(255, 255, 255, 0.3);
+  color: #A1A1A1;
+}
+.nav-tabs > li > a:hover {
+  border-color: transparent;
+  background-color: rgba(255, 255, 255, 0.6);
+}
+.tab-content {
+  padding: 15px;
+  background-color: #FFF;
+  position: relative;
+  z-index: 2;
+  margin-bottom: 20px;
+}
+.list-group-item {
+  border: 1px solid #ededed;
+}
+a.list-group-item {
+  padding: 20px 15px;
+  color: #717171;
+}
+a.list-group-item .list-group-item-heading {
+  color: #717171;
+}
 .dropdown-menu {
   box-shadow: 0 1px 1px rgba(0, 0, 0, 0.05);
   border-radius: 0;
@@ -11325,6 +11401,10 @@ label {
   font-weight: 300;
   margin: 0 5px;
   border-radius: 2px;
+}
+a:hover {
+  color: #088379;
+  text-decoration: none;
 }
 ::selection {
   background-color: #0aa699;
@@ -11392,11 +11472,9 @@ body.full-lg .main {
   margin: -20px -20px 20px -20px;
   padding: 20px;
 }
-.form-signin input[type="text"],
-.form-signin input[type="password"] {
+.form-signin .form-control {
   margin-bottom: 15px;
   border-radius: 5px;
-  border: 1px solid #eaeaea;
   box-shadow: none;
   font-size: 12px;
   height: auto;
@@ -11736,6 +11814,9 @@ body.full-lg .main {
   font-size: 3.5em;
   line-height: 55px;
   text-transform: capitalize;
+}
+.panel-shadow {
+  box-shadow: 0 1px 1px rgba(0, 0, 0, 0.05);
 }
 .panel-tools ul {
   padding-left: 0;

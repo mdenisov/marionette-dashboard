@@ -1,4 +1,8 @@
 
+
+
+
+// --- BUTTONS ---
 .btn {
 	transition: all 0.25s;
 
@@ -8,23 +12,62 @@
 	}
 }
 
+
+
+// --- LABELS ---
 label {
 	color: #A1A1A1;
 	font-family: "Arial", sans-serif;
 	font-size: 12px;
 }
 
+
+
+// --- TABLES ---
+table, .table-bordered {
+	thead {
+		background-color: #F9F8F5;
+
+		& > tr > th {
+			color: #898989;
+		}
+	}
+}
+
+.table {
+	thead > tr > th,
+	tbody > tr > th,
+	tfoot > tr > th,
+	thead > tr > td,
+	tbody > tr > td,
+	tfoot > tr > td {
+		border-top: 1px solid #EDEDED;
+		padding: 12px 8px;
+	}
+}
+
+
+
+// --- FORMS ---
 .form-control {
 	box-shadow: none;
 	transition: border-color ease-in-out .15s, box-shadow ease-in-out .15s;
 
+	&:active,
 	&:focus {
 		border-color: #6CC3A0;
 		outline: 0;
 		box-shadow: none;
+
+		.has-error & {
+			box-shadow: none;
+		}
 	}
 }
 
+
+
+// --- BREADCRUMBS ---
 .breadcrumb {
 //	background-color: #f1f3f5;
 	border-radius: 0;
@@ -34,6 +77,8 @@ label {
 }
 
 
+
+// --- PANELS ---
 .panel {
 	border-radius: 0px;
 	border: 0;
@@ -81,8 +126,80 @@ label {
 	border-radius: 0px;
 }
 
+a[data-toggle="collapse"] {
+	display: block;
+	padding: 10px 5px;
+	color: #999;
+	text-overflow: ellipsis;
+	white-space: nowrap;
+	overflow: hidden;
+
+	i {
+		width: 17px;
+		height: 17px;
+		text-align: center;
+		line-height: 17px;
+		margin-right: 3px;
+
+		&.collapse-caret {
+			float: right;
+			margin-top: 3px;
+		}
+	}
+}
+
+.panel-group .panel-heading + .panel-collapse .panel-body {
+	border-top: 1px solid #EDEDED;
+}
 
 
+
+// --- TABS ---
+.nav-tabs {
+	border-bottom: 1px solid #FFF;
+	background-color: #d9dfe3;
+	padding: 10px 12px 0 5px;
+
+	& > li > a {
+		margin-right: 0px;
+		margin-left: 5px;
+		background-color: rgba(255, 255, 255, 0.3);
+		color: #A1A1A1;
+
+		&:hover {
+			border-color: transparent;
+			background-color: rgba(255, 255, 255, 0.6);
+		}
+	}
+}
+
+.tab-content {
+	padding: 15px;
+	background-color: #FFF;
+	position: relative;
+	z-index: 2;
+	margin-bottom: 20px;
+}
+
+
+
+// --- LIST GROUP ---
+.list-group-item {
+	border: 1px solid #ededed;
+}
+
+a.list-group-item {
+	padding: 20px 15px;
+	color: #717171;
+
+	.list-group-item-heading {
+		color: #717171;
+	}
+}
+
+
+
+// --- DROPDOWN ---
 .dropdown-menu {
 	box-shadow: 0 1px 1px rgba(0, 0, 0, 0.05);
 	border-radius: 0;

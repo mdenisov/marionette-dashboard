@@ -58,8 +58,9 @@ define([
         },
 
         auth: function() {
-            var email    = this.$('input[name="email"]').val();
-            var password = this.$('input[name="password"]').val();
+			var self = this,
+            	email    = self.$('input[name="email"]').val(),
+            	password = self.$('input[name="password"]').val();
 
             App.user.auth({
                 email: email,
@@ -71,7 +72,9 @@ define([
                     App.trigger('app:user:logon');
                     App.navigate('#/');
                 }, error: function(model, res) {
-
+					var error = res.responseText;
+					self.$('.form-signin__user-info').addClass('has-error');
+					self.$('.help-block').removeClass('hide').html(error);
                 }
             });
         }

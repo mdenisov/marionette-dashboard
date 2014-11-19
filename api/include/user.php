@@ -11,9 +11,9 @@ $app->get('/user/list',  'getUsers');
 //echo md5(md5(trim('test')));
 
 function login ($email, $password) {
-    $app = \Slim\Slim::getInstance();
-
     if ($email && $password) {
+        $app = \Slim\Slim::getInstance();
+
         $sql = "select * FROM users WHERE email=:email AND password=:password";
         try {
             $db = getConnection();
@@ -25,25 +25,27 @@ function login ($email, $password) {
             $db = null;
 
             if ($user) {
-                unset($user->password);
+                $app->setEncryptedCookie('my_cookie', $user->password);
+
+//                unset($user->password);
                 echo json_encode($user);
             } else {
 //                $app->halt(401, 'login or password is incorrect');
-                echo '{"error":{"text": login or password is incorrect}}';
+                echo '{"error": {"text": "login or password is incorrect"}}';
             }
         } catch(PDOException $e) {
-            echo '{"error":{"text":'. $e->getMessage() .'}}';
+            $app->halt(401, $e->getMessage());
+//            echo '{"error": {"text": "'. $e->getMessage() .'"}}';
         }
     } else {
-        echo '{"error":{"text": login and password required}}';
+        echo '{"error": {"text": "login and password required"}}';
     }
 }
 
 function logout () {
     $app = \Slim\Slim::getInstance();
+    $app->deleteCookie('my_cookie');
     $app->deleteCookie('accessToken');
-    session_destroy();
-    session_unset();
 
     echo '{}';
 }
