@@ -1,19 +1,22 @@
 <?php
 
-$app->get('/user/login/:login/:password', 'login');
-$app->get('/user/logout', 'logout');
-$app->get('/user/:id', 'getUser');
-$app->put('/user/:id', 'updateUser');
-$app->post('/user', 'addUser');
-$app->delete('/user/:id',  'deleteUser');
-$app->get('/user/list',  'getUsers');
+$app->post('/user/login', 'login');
+$app->post('/user/logout', 'logout');
+$app->get('/user/:id', $authenticate($app), 'getUser');
+$app->put('/user/:id', $authenticate($app), 'updateUser');
+$app->post('/user', $authenticate($app), 'addUser');
+$app->delete('/user/:id', $authenticate($app), 'deleteUser');
+$app->get('/user/list', $authenticate($app), 'getUsers');
+$app->get('/user/search/:query', $authenticate($app), 'findByName');
 
 //echo md5(md5(trim('test')));
 
-function login ($email, $password) {
-    if ($email && $password) {
-        $app = \Slim\Slim::getInstance();
+function login () {
+    $app = \Slim\Slim::getInstance();
+    $email = $app->request->post('email');
+    $password = $app->request->post('password');
 
+    if ($email && $password) {
         $sql = "select * FROM users WHERE email=:email AND password=:password";
         try {
             $db = getConnection();
@@ -25,13 +28,13 @@ function login ($email, $password) {
             $db = null;
 
             if ($user) {
-                $app->setEncryptedCookie('my_cookie', $user->password);
+                $_SESSION['user'] = $email;
 
-//                unset($user->password);
+                $app->setCookie('accessToken', md5(trim($email)));
                 echo json_encode($user);
             } else {
-//                $app->halt(401, 'login or password is incorrect');
-                echo '{"error": {"text": "login or password is incorrect"}}';
+                $app->halt(401, 'login or password is incorrect');
+//                echo '{"error": {"text": "login or password is incorrect"}}';
             }
         } catch(PDOException $e) {
             $app->halt(401, $e->getMessage());
@@ -44,7 +47,7 @@ function login ($email, $password) {
 
 function logout () {
     $app = \Slim\Slim::getInstance();
-    $app->deleteCookie('my_cookie');
+    unset($_SESSION['user']);
     $app->deleteCookie('accessToken');
 
     echo '{}';
@@ -118,10 +121,26 @@ function addUser() {
 }
 
 function getUsers() {
-    $sql = "select * FROM users ORDER BY id";
+    $sql = "SELECT * FROM users ORDER BY id";
     try {
         $db = getConnection();
         $stmt = $db->query($sql);
+        $users = $stmt->fetchAll(PDO::FETCH_OBJ);
+        $db = null;
+        echo '{"users": ' . json_encode($users) . '}';
+    } catch(PDOException $e) {
+        echo '{"error":{"text":'. $e->getMessage() .'}}';
+    }
+}
+
+function findByName($query) {
+    $sql = "SELECT * FROM users WHERE LOWER(name) LIKE :query ORDER BY name";
+    try {
+        $db = getConnection();
+        $stmt = $db->prepare($sql);
+        $query = "%".$query."%";
+        $stmt->bindParam("query", $query);
+        $stmt->execute();
         $users = $stmt->fetchAll(PDO::FETCH_OBJ);
         $db = null;
         echo '{"users": ' . json_encode($users) . '}';

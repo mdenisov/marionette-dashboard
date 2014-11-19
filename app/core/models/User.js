@@ -24,8 +24,10 @@ define([
         auth: function (opts, callback) {
             var self = this;
             this.fetch({
-                url: this.url() + 'login/' + opts.email + '/' + opts.password,
-                wait:true,
+                url: this.url() + 'login',
+				data: {email: opts.email, password: opts.password},
+                wait: true,
+				type: 'POST',
                 success:function(model, response) {
                     if( callback && 'success' in callback ) callback.success(model, response);
                 },
@@ -39,7 +41,8 @@ define([
             var self = this;
             this.fetch({
                 url: this.url() + 'logout',
-                wait:true,
+                wait: true,
+				type: 'POST',
                 success:function(model, response) {
                     if( callback && 'success' in callback ) callback.success(model, response);
                 },
@@ -59,7 +62,7 @@ define([
 
             this.save(data, {
                 url: this.url() + this.get('id'),
-                wait:true,
+                wait: true,
                 success:function(model, response) {
                     if( callback && 'success' in callback ) callback.success(model, response);
                 },
@@ -73,7 +76,7 @@ define([
             var self = this;
             this.fetch(data, {
                 url: this.url() + this.get('id'),
-                wait:true,
+                wait: true,
                 success:function(model, response) {
                     if( callback && 'success' in callback ) callback.success(model, response);
                 },
