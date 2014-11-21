@@ -205,6 +205,14 @@ body {
 	-webkit-overflow-scrolling: touch;
 
 	.transition(all 0.3s ease-in-out);
+
+    &::-webkit-scrollbar {
+        background: lighten(#1b1e24, 5%);
+        width: 5px;
+    }
+    &::-webkit-scrollbar-thumb {
+        background: lighten(#1b1e24, 20%);
+    }
 }
 
 .avatar-block {

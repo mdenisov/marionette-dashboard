@@ -10,7 +10,7 @@ require.config({
         "lodash": 				"../vendor/lodash/dist/lodash",
         "jquery": 				"../vendor/jquery/dist/jquery",
         "backbone": 			"../vendor/backbone/backbone",
-        "marionette":			"../vendor/backbone.marionette/lib/core/amd/backbone.marionette",
+        "marionette":			"../vendor/backbone.marionette/lib/core/backbone.marionette",
 		"backbone.wreqr":		"../vendor/backbone.wreqr/lib/backbone.wreqr",
 		"backbone.babysitter":  "../vendor/backbone.babysitter/lib/backbone.babysitter",
         "bootstrap":			"../vendor/bootstrap/dist/js/bootstrap",

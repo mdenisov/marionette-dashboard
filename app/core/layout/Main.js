@@ -10,7 +10,7 @@ define([
 ], function ($, _, Marionette, App, template) {
 	'use strict';
 
-	return Marionette.Layout.extend({
+	return Marionette.LayoutView.extend({
 		template: template,
 		regions: {
             breadcrumb:     '#breadcrumb',

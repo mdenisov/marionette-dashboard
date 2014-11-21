@@ -11597,6 +11597,13 @@ body.full-lg .main {
   -o-transition: all 0.3s ease-in-out;
   transition: all 0.3s ease-in-out;
 }
+.sidebar::-webkit-scrollbar {
+  background: #262a33;
+  width: 5px;
+}
+.sidebar::-webkit-scrollbar-thumb {
+  background: #474f5e;
+}
 .avatar-block {
   color: #FFF;
   padding: 25px 0px 0;

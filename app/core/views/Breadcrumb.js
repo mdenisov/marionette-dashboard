@@ -31,7 +31,7 @@ define([
 	var BreadcrumbListView = Marionette.CollectionView.extend({
 		tagName: "ol",
 		className: "breadcrumb",
-		itemView: BreadcrumbItemView,
+        childView: BreadcrumbItemView,
 
 		homeModel: {link: '#/', name: 'Главная'},
 

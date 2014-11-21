@@ -8,7 +8,7 @@ define(function(require, exports, module) {
 		cookie = require("cookie"),
 		Backbone = require("backbone"),
 		Marionette = require("marionette"),
-		BossView = require("marionette.BossView"),
+//		BossView = require("marionette.BossView"),
 		bootstrap = require("bootstrap"),
 		Breadcrumb = require("core/views/Breadcrumb"),
 		Notification = require("core/utils/Notification");
@@ -62,7 +62,7 @@ define(function(require, exports, module) {
 		});
 	});
 
-	app.on("initialize:before", function(options) {
+	app.on("before:start", function(options) {
 		options || (options = {});
         this.i18n = {
 			acceptedLanguages: options.acceptedLanguages || [],
@@ -70,8 +70,8 @@ define(function(require, exports, module) {
 		};
 	});
 
-	app.on("initialize:after", function() {
-		if(Backbone.history){
+	app.on("start", function() {
+		if(Backbone.history) {
 			Backbone.history.start();
 
 			if (this.getCurrentRoute() === "") {
@@ -103,7 +103,7 @@ define(function(require, exports, module) {
 	});
 
 	app.on('app:page:show', function(view) {
-        this.regionMain.currentView.content.close();
+//        this.regionMain.currentView.content.destroy();
         this.regionMain.currentView.content.show(view);
 	});
 
@@ -146,10 +146,10 @@ define(function(require, exports, module) {
 			Layout = require("core/layout/Empty");
 		}
 
-        this.layout = new Layout({model: app.user});
+        this.layout = new Layout({model: this.user});
 
 		// Inject the main layout into the #main region of the page.
-        this.regionMain.close();
+//        this.regionMain.close();
         this.regionMain.show(this.layout);
 
         this.trigger('app:layout:show');

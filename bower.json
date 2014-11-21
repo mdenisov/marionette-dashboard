@@ -5,7 +5,7 @@
     "lodash": "latest",
     "almond": "~0.2.9",
     "backbone": "~1.1.2",
-    "backbone.marionette": "~1.7.4",
+    "backbone.marionette": "~2.2.0",
 	"backbone.validation": "latest",
     "backbone.paginator": "~0.8.1",
     "backbone.localStorage": "~1.1.10",
